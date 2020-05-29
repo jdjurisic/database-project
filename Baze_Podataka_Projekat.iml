@@ -7,5 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="jtds-1.0.3" level="project" />
+    <orderEntry type="library" exported="" name="lombok" level="project" />
   </component>
 </module>
