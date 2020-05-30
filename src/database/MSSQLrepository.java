@@ -6,7 +6,9 @@ import resource.DBNode;
 import resource.DBNodeComposite;
 import resource.data.Row;
 import resource.enums.AttributeType;
+import resource.enums.ConstraintType;
 import resource.implementation.Attribute;
+import resource.implementation.AttributeConstraint;
 import resource.implementation.Entity;
 import resource.implementation.InformationResource;
 
@@ -68,6 +70,7 @@ public class MSSQLrepository implements Repository{
                 //Koje atribute imaja ova tabela?
 
                 ResultSet columns = metaData.getColumns(connection.getCatalog(), null, tableName, null);
+                ResultSet primaryKeys = metaData.getPrimaryKeys(connection.getCatalog(), null, tableName);
 
                 while (columns.next()){
 
@@ -78,8 +81,15 @@ public class MSSQLrepository implements Repository{
 
                     newTable.addChild(attribute);
                     System.out.println(attribute.toString());
-
                 }
+
+                while(primaryKeys.next()){
+                    //System.out.println("Za tab:"+tableName+" primarni kljuc :" + primaryKeys.getString("COLUMN_NAME"));
+                    String up = primaryKeys.getString("COLUMN_NAME");
+                    Attribute a =(Attribute) newTable.getChildByName(up);
+                    a.addChild(new AttributeConstraint(ConstraintType.PRIMARY_KEY.toString(),a,ConstraintType.PRIMARY_KEY));
+                }
+
 
             }
 
@@ -99,26 +109,21 @@ public class MSSQLrepository implements Repository{
                     fkTableName = foreignKeys.getString("PKTABLE_NAME");
                     fkColumnName = foreignKeys.getString("FKCOLUMN_NAME");
                     if(fkTableName.equals(tableName1))break;
-                    System.out.println("Tabela:"+tableName1 +"strani kljuc iz tabele:"+fkTableName +" "+ fkColumnName);
+                    //System.out.println("Tabela:"+tableName1 +"strani kljuc iz tabele:"+fkTableName +" "+ fkColumnName);
                     Entity tabela = (Entity)ir.getChildByName(tableName1);
                     Attribute atr = (Attribute)tabela.getChildByName(fkColumnName);
-                    System.out.println("TABELA:"+tabela);
-                    System.out.println("ATR:"+atr);
-                    System.out.println("ISPIS "+ fkTableName + fkColumnName);
+                    //System.out.println("TABELA:"+tabela);
+                    //System.out.println("ATR:"+atr);
+                    //System.out.println("ISPIS "+ fkTableName + fkColumnName);
                     Entity tabelaVeza = (Entity) ir.getChildByName(fkTableName);
-                    System.out.println("POKUSAJ "+tabelaVeza);
+                    //System.out.println("POKUSAJ "+tabelaVeza);
                     Attribute atrVeza = (Attribute) tabelaVeza.getChildByName(fkColumnName);
-                    System.out.println("POKUSAJ2 "+atrVeza);
+                    //System.out.println("POKUSAJ2 "+atrVeza);
                     atr.setInRelationWith(atrVeza);
-                    System.out.println("NOVA KOLONA:"+tabela);
+                    atr.addChild(new AttributeConstraint(ConstraintType.FOREIGN_KEY.toString(),atr,ConstraintType.FOREIGN_KEY));
+                    //System.out.println("NOVA KOLONA:"+tabela);
                 }
             }
-//moje
-
-//            System.out.println(" --- ");
-
-//            System.out.println(" --- ");
-            //moje
 
             //TODO Ogranicenja nad kolonama? Relacije?
 
