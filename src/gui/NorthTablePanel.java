@@ -1,25 +1,30 @@
 package gui;
 
 import gui.table.TableModel;
+import resource.implementation.Entity;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class NorthTablePanel extends JPanel {
 
-    private String name;
+    private Entity entity;
     private TableModel tableModel;
     private JTable jTable;
 
-    public NorthTablePanel(String name, TableModel tableModel) {
+    public NorthTablePanel(Entity entity, TableModel tableModel) {
         super();
         setLayout(new BorderLayout());
-        this.name =name;
+        this.entity = entity;
+
         this.tableModel = tableModel;
-        setName(this.name);
+        setName(entity.getName().toString());
 
         jTable = new JTable();
-        jTable.setPreferredScrollableViewportSize(new Dimension(500, 200));
+        //float yDimenzija = this.getAlignmentY()/3;
+        Dimension dimension=MainFrame.getInstance().getSize();
+        int height = (int) ((int) dimension.height/3.5);
+        jTable.setPreferredScrollableViewportSize(new Dimension(500, height));
         jTable.setFillsViewportHeight(true);
         this.add(new JScrollPane(jTable), BorderLayout.NORTH);
         jTable.setModel(this.tableModel);
@@ -28,9 +33,9 @@ public class NorthTablePanel extends JPanel {
         this.add(northToolBar, BorderLayout.SOUTH);
 
 
+    }
 
-
-
-
+    public Entity getEntity() {
+        return entity;
     }
 }

@@ -1,5 +1,6 @@
 package gui;
 
+import actions.ActionManager;
 import app.AppCore;
 import lombok.Data;
 import observer.Notification;
@@ -24,7 +25,7 @@ public class MainFrame  extends JFrame implements Subscriber {
 
     private MyTree myTree;
     private MyTreeModel myTreeModel;
-
+    private ActionManager actionManager;
 
     private MainFrame() {
 
@@ -32,7 +33,7 @@ public class MainFrame  extends JFrame implements Subscriber {
 
 
     private void initialise() {
-
+        actionManager = new ActionManager();
         //System.out.println(getAppCore().loadTree());
         myTreeModel = new MyTreeModel(null);
         myTree = new MyTree(myTreeModel);
@@ -50,10 +51,10 @@ public class MainFrame  extends JFrame implements Subscriber {
 
         MainMenu mainMenu = new MainMenu();
         setJMenuBar(mainMenu);
-
-        /*MainToolBar mainToolBar = new MainToolBar();
-        add(mainToolBar, BorderLayout.NORTH);*/
-
+/*
+        MainToolBar mainToolBar = new MainToolBar();
+        add(mainToolBar, BorderLayout.NORTH);
+*/
         JPanel myCenterPanel = new JPanel();
         myCenterPanel.setLayout(new BorderLayout());
 

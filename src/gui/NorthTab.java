@@ -1,30 +1,25 @@
 package gui;
 
+import actions.ChangeNortTab;
 import gui.table.TableModel;
+import resource.implementation.Entity;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.*;
 
 public class NorthTab extends JTabbedPane {
 
 
 
     public NorthTab() {
-        this.addChangeListener( new ChangeListener(){
-
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                NorthTablePanel northTablePanel= (NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent();
-                System.out.println(northTablePanel.getName());
-            }
-        });
+        //this.
+        this.addChangeListener(
+            new ChangeNortTab()
+        );
     }
 
-    public void addTabWithTable(String name, TableModel tableModel){
-        NorthTablePanel northTablePanel = new NorthTablePanel(name, tableModel);
-        this.addTab(name,northTablePanel);
+    public void addTabWithTable(Entity entity, TableModel tableModel){
+        NorthTablePanel northTablePanel = new NorthTablePanel(entity, tableModel);
+        this.addTab(entity.getName().toString(),northTablePanel);
 
     }
 

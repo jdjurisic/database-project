@@ -1,5 +1,6 @@
 package app;
 
+import actions.ActionManager;
 import database.Database;
 import database.DatabaseImplementation;
 import database.MSSQLrepository;
@@ -22,9 +23,11 @@ public class AppCore extends PublisherImplementation {
 
 
     public AppCore() {
+
         this.settings = initSettings();
         this.database = new DatabaseImplementation(new MSSQLrepository(this.settings));
         tableModel = new TableModel();
+
     }
 
     private Settings initSettings() {
