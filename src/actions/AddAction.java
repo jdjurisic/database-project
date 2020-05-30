@@ -24,54 +24,31 @@ public class AddAction extends MyAbstractAction {
         Entity nt = ((NorthTablePanel)MainFrame.getInstance().getNorthTab().getSelectedComponent()).getEntity();
         System.out.println(nt);
 
-//        ArrayList<JTextField> fields = new ArrayList<>();
-//        ArrayList<JLabel> labels = new ArrayList<>();
+        ArrayList<JTextField> fields = new ArrayList<>();
+        ArrayList<JLabel> labels = new ArrayList<>();
+
         JPanel myPanel = new JPanel();
         GridLayout gr = new GridLayout(nt.getChildren().size(),2,2,2);
         myPanel.setLayout(gr);
 
-
         for(DBNode a: nt.getChildren()){
-//            fields.add(new JTextField(5));
-//            labels.add(new JLabel(a.getName()));
-            myPanel.add(new JLabel(a.getName()));
-            myPanel.add(new JTextField(5));
+            fields.add(new JTextField(5));
+            labels.add(new JLabel(a.getName()));
         }
 
-
-
-//        myPanel.add(new JLabel("x:"));
-//        myPanel.add(xField);
-//        myPanel.add(Box.createHorizontalStrut(15)); // a spacer
-//        myPanel.add(new JLabel("y:"));
-//        myPanel.add(yField);
+        for(int i=0;i<labels.size();i++){
+            myPanel.add(labels.get(i));
+            myPanel.add(fields.get(i));
+        }
 
         int result = JOptionPane.showConfirmDialog(null, myPanel,
                 "Please Enter Values", JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
             System.out.println("OK");
+            for(int i=0;i<labels.size();i++){
+                System.out.println(labels.get(i).getText()+" "+fields.get(i).getText());
+            }
         }
 
     }
 }
-
-//public class JOptionPaneMultiInput {
-//    public static void main(String[] args) {
-//        JTextField xField = new JTextField(5);
-//        JTextField yField = new JTextField(5);
-//
-//        JPanel myPanel = new JPanel();
-//        myPanel.add(new JLabel("x:"));
-//        myPanel.add(xField);
-//        myPanel.add(Box.createHorizontalStrut(15)); // a spacer
-//        myPanel.add(new JLabel("y:"));
-//        myPanel.add(yField);
-//
-//        int result = JOptionPane.showConfirmDialog(null, myPanel,
-//                "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
-//        if (result == JOptionPane.OK_OPTION) {
-//            System.out.println("x value: " + xField.getText());
-//            System.out.println("y value: " + yField.getText());
-//        }
-//    }
-//}

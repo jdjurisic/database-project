@@ -11,10 +11,14 @@ public class NorthToolBar extends JToolBar {
         super(BorderLayout.NORTH);
         setFloatable(false);
         addSeparator();
+        this.add(Box.createHorizontalStrut(5));
         add(MainFrame.getInstance().getActionManager().getAddAction());
+
         addSeparator();
+        this.add(Box.createHorizontalStrut(5));
         add(MainFrame.getInstance().getActionManager().getUpdateAction());
         addSeparator();
+        this.add(Box.createHorizontalStrut(5));
         add(MainFrame.getInstance().getActionManager().getDeleteAction());
         addSeparator();
     }

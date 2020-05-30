@@ -12,5 +12,6 @@ public class DeleteAction extends MyAbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println(" del ");
+
     }
 }
