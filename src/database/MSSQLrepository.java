@@ -77,10 +77,12 @@ public class MSSQLrepository implements Repository{
                     String columnName = columns.getString("COLUMN_NAME");
                     String columnType = columns.getString("TYPE_NAME");
                     int columnSize = Integer.parseInt(columns.getString("COLUMN_SIZE"));
+                    String isNullable = columns.getString("IS_NULLABLE");
+                    //System.out.println("KOLONA "+ columnName +" isnullable :"+isNullable);
                     Attribute attribute = new Attribute(columnName, newTable, AttributeType.valueOf(columnType.toUpperCase()), columnSize);
-
+                    if(isNullable.equals("NO"))attribute.addChild(new AttributeConstraint(ConstraintType.NOT_NULL.toString(),attribute,ConstraintType.NOT_NULL));
                     newTable.addChild(attribute);
-                    System.out.println(attribute.toString());
+                    //System.out.println(attribute.toString());
                 }
 
                 while(primaryKeys.next()){
@@ -103,7 +105,7 @@ public class MSSQLrepository implements Repository{
             while(tables1.next()){
                 String tableName1 = tables1.getString("TABLE_NAME");
                 ResultSet foreignKeys = metaData.getImportedKeys(connection.getCatalog(), null, tableName1);
-                System.out.println(tableName1);
+                //System.out.println(tableName1);
                 while(foreignKeys.next()){
 
                     fkTableName = foreignKeys.getString("PKTABLE_NAME");
