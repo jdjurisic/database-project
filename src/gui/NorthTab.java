@@ -16,7 +16,6 @@ public class NorthTab extends JTabbedPane {
 
             @Override
             public void stateChanged(ChangeEvent e) {
-                //System.out.println("aa1313");
                 NorthTablePanel northTablePanel= (NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent();
                 System.out.println(northTablePanel.getName());
             }
