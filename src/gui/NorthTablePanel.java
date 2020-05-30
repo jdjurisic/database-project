@@ -23,12 +23,26 @@ public class NorthTablePanel extends JPanel {
         setName(entity.getName().toString());
 
         jTable = new JTable();
+        jTable.setDefaultEditor(Object.class, null);
+
         //
 
-        jTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                int sel = jTable.getSelectedRow();
-                System.out.println("IZABRAN RED "+sel);
+//        jTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+//            public void valueChanged(ListSelectionEvent e) {
+//
+//                int sel = jTable.getSelectedRow();
+//                System.out.println("IZABRAN RED "+sel);
+//            }
+//        });
+         //mouse adapter
+        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = jTable.rowAtPoint(evt.getPoint());
+                int col = jTable.columnAtPoint(evt.getPoint());
+                if (row >= 0 && col >= 0) {
+                    //System.out.println("KLIK");
+                }
             }
         });
 
@@ -40,6 +54,7 @@ public class NorthTablePanel extends JPanel {
         this.add(new JScrollPane(jTable), BorderLayout.NORTH);
         jTable.setModel(this.tableModel);
         this.add(Box.createVerticalStrut(10));
+
 
         NorthToolBar northToolBar = new NorthToolBar();
         this.add(northToolBar, BorderLayout.SOUTH);

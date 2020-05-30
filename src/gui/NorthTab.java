@@ -13,7 +13,7 @@ public class NorthTab extends JTabbedPane {
     public NorthTab() {
         //this.
         this.addChangeListener(
-            new ChangeNortTab()
+            MainFrame.getInstance().getActionManager().getChangeNortTab()
         );
     }
 
