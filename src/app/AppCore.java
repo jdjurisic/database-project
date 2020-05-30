@@ -42,10 +42,7 @@ public class AppCore extends PublisherImplementation {
         this.notifySubscribers(new Notification(NotificationCode.RESOURCE_LOADED,ir));
     }
 
-    public InformationResource loadTree(){
-        InformationResource ir = (InformationResource) this.database.loadResource();
-        return ir;
-    }
+
 
     public void readDataFromTable(String fromTable){
 
@@ -53,6 +50,12 @@ public class AppCore extends PublisherImplementation {
 
         //Zasto ova linija moze da ostane zakomentarisana?
         //this.notifySubscribers(new Notification(NotificationCode.DATA_UPDATED, this.getTableModel()));
+    }
+
+    public TableModel readTableModelFromTable(String fromTable){
+        TableModel tableModel = new TableModel();
+        tableModel.setRows(this.database.readDataFromTable(fromTable));
+        return tableModel;
     }
 
 

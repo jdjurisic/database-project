@@ -3,6 +3,7 @@ package database;
 import database.settings.Settings;
 import lombok.Data;
 import resource.DBNode;
+import resource.DBNodeComposite;
 import resource.data.Row;
 import resource.enums.AttributeType;
 import resource.implementation.Attribute;
@@ -56,7 +57,7 @@ public class MSSQLrepository implements Repository{
             InformationResource ir = new InformationResource("RAF_BP_Primer");
 
             String tableType[] = {"TABLE"};
-            ResultSet tables = metaData.getTables(connection.getCatalog(), null, null, tableType);
+            ResultSet tables = metaData.getTables(connection.getCatalog(), "dbo", null, tableType);
 
             while (tables.next()){
 
@@ -74,18 +75,57 @@ public class MSSQLrepository implements Repository{
                     String columnType = columns.getString("TYPE_NAME");
                     int columnSize = Integer.parseInt(columns.getString("COLUMN_SIZE"));
                     Attribute attribute = new Attribute(columnName, newTable, AttributeType.valueOf(columnType.toUpperCase()), columnSize);
+
                     newTable.addChild(attribute);
+                    System.out.println(attribute.toString());
 
                 }
 
             }
 
+            System.out.println("NOVO");
+            ResultSet tables1 = metaData.getTables(connection.getCatalog(),"dbo",null,tableType);
+
+
+            String fkTableName = null;
+            String fkColumnName = null;
+
+            while(tables1.next()){
+                String tableName1 = tables1.getString("TABLE_NAME");
+                ResultSet foreignKeys = metaData.getImportedKeys(connection.getCatalog(), null, tableName1);
+                System.out.println(tableName1);
+                while(foreignKeys.next()){
+
+                    fkTableName = foreignKeys.getString("PKTABLE_NAME");
+                    fkColumnName = foreignKeys.getString("FKCOLUMN_NAME");
+                    if(fkTableName.equals(tableName1))break;
+                    System.out.println("Tabela:"+tableName1 +"strani kljuc iz tabele:"+fkTableName +" "+ fkColumnName);
+                    Entity tabela = (Entity)ir.getChildByName(tableName1);
+                    Attribute atr = (Attribute)tabela.getChildByName(fkColumnName);
+                    System.out.println("TABELA:"+tabela);
+                    System.out.println("ATR:"+atr);
+                    System.out.println("ISPIS "+ fkTableName + fkColumnName);
+                    Entity tabelaVeza = (Entity) ir.getChildByName(fkTableName);
+                    System.out.println("POKUSAJ "+tabelaVeza);
+                    Attribute atrVeza = (Attribute) tabelaVeza.getChildByName(fkColumnName);
+                    System.out.println("POKUSAJ2 "+atrVeza);
+                    atr.setInRelationWith(atrVeza);
+                    System.out.println("NOVA KOLONA:"+tabela);
+                }
+            }
+//moje
+
+//            System.out.println(" --- ");
+
+//            System.out.println(" --- ");
+            //moje
 
             //TODO Ogranicenja nad kolonama? Relacije?
 
+            //System.out.println(ir);
             return ir;
             // String isNullable = columns.getString("IS_NULLABLE");
-            // ResultSet foreignKeys = metaData.getImportedKeys(connection.getCatalog(), null, table.getName());
+            //ResultSet foreignKeys = metaData.getImportedKeys(connection.getCatalog(), null, newTable.getName());
             // ResultSet primaryKeys = metaData.getPrimaryKeys(connection.getCatalog(), null, table.getName());
 
         }
@@ -118,7 +158,6 @@ public class MSSQLrepository implements Repository{
                 row.setName(from);
 
                 ResultSetMetaData resultSetMetaData = rs.getMetaData();
-
                 for (int i = 1; i<=resultSetMetaData.getColumnCount(); i++){
                     row.addField(resultSetMetaData.getColumnName(i), rs.getString(i));
                 }

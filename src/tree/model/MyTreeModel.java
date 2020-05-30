@@ -1,7 +1,9 @@
 package tree.model;
 
+
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
+
 
 public class MyTreeModel extends DefaultTreeModel {
 
@@ -24,8 +26,7 @@ public class MyTreeModel extends DefaultTreeModel {
 	public void setRoot(MutableTreeNode root) {
 		this.root = root;
 	}
-	
-	
+
 	
 
 }

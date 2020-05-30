@@ -19,8 +19,8 @@ public class MainFrame  extends JFrame implements Subscriber {
 
     private static MainFrame instance = null;
     private AppCore appCore;
-    private NorthPanel northPanel;
-    private SouthPanel southPanel;
+    private NorthTab northTab;
+    private SouthTab southTab;
 
     private MyTree myTree;
     private MyTreeModel myTreeModel;
@@ -33,9 +33,9 @@ public class MainFrame  extends JFrame implements Subscriber {
 
     private void initialise() {
 
-        /*System.out.println(getAppCore().loadTree());
-       myTreeModel = new MyTreeModel(new MyNode(getAppCore().loadTree()));
-        myTree = new MyTree(myTreeModel);*/
+        //System.out.println(getAppCore().loadTree());
+        myTreeModel = new MyTreeModel(null);
+        myTree = new MyTree(myTreeModel);
         setFrame();
     }
 
@@ -58,18 +58,18 @@ public class MainFrame  extends JFrame implements Subscriber {
         myCenterPanel.setLayout(new BorderLayout());
 
 
-        northPanel = new NorthPanel();
-        northPanel.setVisible(true);
-        myCenterPanel.add(northPanel, BorderLayout.NORTH);
+        northTab = new NorthTab();
+        northTab.setVisible(true);
+        myCenterPanel.add(northTab, BorderLayout.NORTH);
 
-        southPanel = new SouthPanel();
-        southPanel.setVisible(true);
-        myCenterPanel.add(southPanel, BorderLayout.SOUTH);
+        southTab = new SouthTab();
+        southTab.setVisible(true);
+        myCenterPanel.add(southTab, BorderLayout.SOUTH);
 
         myCenterPanel.setVisible(true);
         add(myCenterPanel, BorderLayout.CENTER);
 
-        JScrollPane scrollTree = new JScrollPane(/*myTree*/);
+        JScrollPane scrollTree = new JScrollPane(myTree);
         add(scrollTree);
 
         JSplitPane splitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollTree, myCenterPanel);
@@ -115,9 +115,12 @@ public class MainFrame  extends JFrame implements Subscriber {
     public void update(Notification notification) {
         if (notification.getCode() == NotificationCode.RESOURCE_LOADED){
             System.out.println((InformationResource)notification.getData());
-            myTreeModel = new MyTreeModel(new MyNode((InformationResource)notification.getData()));
-            myTree = new MyTree(myTreeModel);
-            SwingUtilities.updateComponentTreeUI(this);
+            /*myTreeModel = new MyTreeModel(new MyNode((InformationResource)notification.getData()));
+            myTree = new MyTree(myTreeModel);*/
+            myTreeModel.setRoot(new MyNode((InformationResource)notification.getData()));
+
+            SwingUtilities.updateComponentTreeUI(this.getMyTree());
+
         }
     }
 

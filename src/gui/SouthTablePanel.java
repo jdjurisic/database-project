@@ -3,11 +3,11 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 
-public class SouthPanel extends JPanel {
+public class SouthTablePanel extends JPanel {
 
     private SouthTab southTab;
 
-    public SouthPanel() {
+    public SouthTablePanel() {
         southTab = new SouthTab();
 
         southTab.setVisible(true);

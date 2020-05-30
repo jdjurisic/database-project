@@ -4,44 +4,47 @@ package tree.model;
 import resource.DBNode;
 import resource.DBNodeComposite;
 
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import java.util.Enumeration;
 
 
-public class MyNode implements MutableTreeNode {
+public class MyNode extends   DefaultMutableTreeNode {
 
     private DBNode dbNode;
 
     public MyNode(DBNode dbNode) {
+       super(dbNode, true);
         this.dbNode = dbNode;
+//        System.out.println("aa");
     }
 
-
+/*
     @Override
     public void insert(MutableTreeNode child, int index) {
-
+        System.out.println("ii");
 
     }
 
     @Override
     public void remove(int index) {
-
+        System.out.println("2");
     }
 
     @Override
     public void remove(MutableTreeNode node) {
-
+        System.out.println("3");
     }
 
     @Override
     public void setUserObject(Object object) {
-
+        System.out.println("4");
     }
 
     @Override
     public void removeFromParent() {
-
+        System.out.println("5");
     }
 
     @Override
@@ -50,7 +53,7 @@ public class MyNode implements MutableTreeNode {
             DBNode nodeDb = ((MyNode) newParent).getDbNode();
             getDbNode().setParent(nodeDb);
         }
-    }
+    }*/
 
     @Override
     public TreeNode getChildAt(int childIndex) {
@@ -67,12 +70,20 @@ public class MyNode implements MutableTreeNode {
     public int getChildCount() {
         if(getDbNode() instanceof  DBNodeComposite){
             DBNodeComposite dbNodeComposite = (DBNodeComposite) getDbNode();
+           // System.out.println(dbNodeComposite.getChildren().size());
+
             return (dbNodeComposite.getChildren().size());
         }
 
         return 0;
     }
 
+    @Override
+    public String toString() {
+        return getDbNode().getName();
+    }
+
+/*
     @Override
     public TreeNode getParent() {
 
@@ -105,8 +116,9 @@ public class MyNode implements MutableTreeNode {
 
     @Override
     public Enumeration children() {
+        System.out.println("a");
         return null;
-    }
+    }*/
 
     public DBNode getDbNode() {
         return dbNode;

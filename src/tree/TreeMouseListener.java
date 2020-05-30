@@ -2,6 +2,9 @@ package tree;
 
 
 import gui.MainFrame;
+import resource.DBNodeComposite;
+import resource.implementation.Entity;
+import tree.model.MyNode;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -17,16 +20,22 @@ public class TreeMouseListener extends MouseAdapter {
 
 		super.mousePressed(e);
 
-		if ((e.getClickCount() == 2)
-			//	&& (tree.getLastSelectedPathComponent() != null)
-		 ) {
-			/*
-			if (tree.getLastSelectedPathComponent() instanceof ProjectNode) {
-				// System.out.println(tree.getLastSelectedPathComponent().toString());
+		if ((e.getClickCount() == 2) && (tree.getLastSelectedPathComponent() != null)) {
+
+
+			if (tree.getLastSelectedPathComponent() instanceof MyNode) {
+				MyNode myNode = (MyNode) tree.getLastSelectedPathComponent();
+				if(myNode.getDbNode() instanceof Entity){
+					Entity entity = (Entity) myNode.getDbNode();
+
+					MainFrame.getInstance().getNorthTab().addTabWithTable(entity.getName(),
+							MainFrame.getInstance().getAppCore().readTableModelFromTable(entity.getName()));
+					MainFrame.getInstance().getNorthTab().setSelectedIndex(MainFrame.getInstance().getNorthTab().getTabCount()-1);
+				}
 
 
 
-			}*/
+			}
 		}
 	}
 
