@@ -9,12 +9,13 @@ public class NorthToolBar extends JToolBar {
     public NorthToolBar() {
 
         super(BorderLayout.NORTH);
-        //setFloatable(true);
-
-
-        /*add(MainFrame.getInstance().getActionManager().getNewNode());
-        add(MainFrame.getInstance().getActionManager().getRemoveNode());
-        add(MainFrame.getInstance().getActionManager().getRenameNode());*/
+        setFloatable(false);
+        addSeparator();
+        add(MainFrame.getInstance().getActionManager().getAddAction());
+        addSeparator();
+        add(MainFrame.getInstance().getActionManager().getUpdateAction());
+        addSeparator();
+        add(MainFrame.getInstance().getActionManager().getDeleteAction());
         addSeparator();
     }
 }
