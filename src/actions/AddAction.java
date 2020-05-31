@@ -23,6 +23,7 @@ public class AddAction extends MyAbstractAction {
     public void actionPerformed(ActionEvent e) {
         System.out.println("Add action");
         Entity nt = ((NorthTablePanel)MainFrame.getInstance().getNorthTab().getSelectedComponent()).getEntity();
+
         System.out.println(nt);
 
         ArrayList<JTextField> fields = new ArrayList<>();
@@ -68,7 +69,9 @@ public class AddAction extends MyAbstractAction {
                 lst.add(fields.get(i).getText());
             }
             System.out.println("Lista prosledjena :"+lst);
-            MainFrame.getInstance().getAppCore().getDatabase().executeQuery(stringBuilder.toString(),lst);
+            MainFrame.getInstance().getAppCore().addTableModel(stringBuilder.toString(),lst,
+                    ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel(),
+                    nt.getName());
         }
 
     }

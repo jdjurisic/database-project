@@ -14,6 +14,8 @@ import observer.implementation.PublisherImplementation;
 import resource.implementation.InformationResource;
 import utils.Constants;
 
+import java.util.List;
+
 @Data
 public class AppCore extends PublisherImplementation {
 
@@ -59,6 +61,11 @@ public class AppCore extends PublisherImplementation {
         TableModel tableModel = new TableModel();
         tableModel.setRows(this.database.readDataFromTable(fromTable));
         return tableModel;
+    }
+
+    public void addTableModel(String query, List<String> lst, TableModel tableModel, String tablename){
+        getDatabase().executeQuery(query, lst);
+        tableModel.setRows(this.database.readDataFromTable(tablename));
     }
 
 

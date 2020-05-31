@@ -4,8 +4,6 @@ import gui.table.TableModel;
 import resource.implementation.Entity;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 
 public class NorthTablePanel extends JPanel {
@@ -46,6 +44,11 @@ public class NorthTablePanel extends JPanel {
             }
         });
 
+
+
+
+        jTable.getSelectedRow();
+
         //float yDimenzija = this.getAlignmentY()/3;
         Dimension dimension=MainFrame.getInstance().getSize();
         int height = (int) ((int) dimension.height/3.5);
@@ -64,5 +67,9 @@ public class NorthTablePanel extends JPanel {
 
     public Entity getEntity() {
         return entity;
+    }
+
+    public TableModel getTableModel() {
+        return tableModel;
     }
 }
