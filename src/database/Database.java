@@ -23,7 +23,7 @@ public interface Database{
 
     void filterAndSortInTable(HashMap<String, String> hashMap, String columns, String tableName);
 
-    void clickOnTable(String query,  String tableName);
+    List<Row> clickOnTable(String query,  String tableName);
 
 
 }

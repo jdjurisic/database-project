@@ -99,7 +99,7 @@ public class MSSQLrepository implements Repository{
 
             }
 
-            System.out.println("NOVO");
+            //System.out.println("NOVO");
             ResultSet tables1 = metaData.getTables(connection.getCatalog(),"dbo",null,tableType);
 
 
@@ -114,7 +114,7 @@ public class MSSQLrepository implements Repository{
 
                     fkTableName = foreignKeys.getString("PKTABLE_NAME");
                     fkColumnName = foreignKeys.getString("FKCOLUMN_NAME");
-                    if(fkTableName.equals(tableName1))break;
+                    if(fkTableName.equals(tableName1))continue;
                     //System.out.println("Tabela:"+tableName1 +"strani kljuc iz tabele:"+fkTableName +" "+ fkColumnName);
                     Entity tabela = (Entity)ir.getChildByName(tableName1);
                     Attribute atr = (Attribute)tabela.getChildByName(fkColumnName);
@@ -399,11 +399,44 @@ public class MSSQLrepository implements Repository{
 
     @Override
     public void filterAndSortInTable(HashMap<String, String> hashMap, String columns, String tableName) {
-        
+
     }
 
     @Override
-    public void clickOnTable(String query, String tableName) {
+    public List<Row> clickOnTable(String query, String tableName) {
+
+        List<Row> rows = new ArrayList<>();
+
+
+        try{
+            this.initConnection();
+
+            String queryToSend = "SELECT * FROM " + tableName + " WHERE "+ query;
+            //System.out.println(queryToSend);
+            PreparedStatement preparedStatement = connection.prepareStatement(queryToSend);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()){
+
+                Row row = new Row();
+                row.setName(tableName);
+
+                ResultSetMetaData resultSetMetaData = rs.getMetaData();
+                for (int i = 1; i<=resultSetMetaData.getColumnCount(); i++){
+                    row.addField(resultSetMetaData.getColumnName(i), rs.getString(i));
+                }
+                rows.add(row);
+
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            this.closeConnection();
+        }
+        //System.out.println(rows);
+        return rows;
 
     }
 

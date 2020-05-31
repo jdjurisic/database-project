@@ -53,8 +53,8 @@ public class DatabaseImplementation implements Database {
 
 
     @Override
-    public void clickOnTable(String query, String tableName) {
-        repository.clickOnTable(query, tableName);
+    public List<Row> clickOnTable(String query, String tableName) {
+        return repository.clickOnTable(query, tableName);
     }
 
 }

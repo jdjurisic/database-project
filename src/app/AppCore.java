@@ -90,9 +90,10 @@ public class AppCore extends PublisherImplementation {
 
     }
 
-    public  void clickOnRow(String query,  String tableName, TableModel tableModel){
-        getDatabase().clickOnTable(query, tableName);
-        tableModel.setRows(this.database.readDataFromTable(tableName));
+    public  TableModel clickOnRow(String query,  String tableName){
+        TableModel tableModel = new TableModel();
+        tableModel.setRows(getDatabase().clickOnTable(query, tableName));
+        return tableModel;
     }
 
     public TableModel getTableModel() {
