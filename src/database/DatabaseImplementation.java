@@ -5,6 +5,7 @@ import lombok.Data;
 import resource.DBNode;
 import resource.data.Row;
 
+import java.sql.PreparedStatement;
 import java.util.List;
 
 @Data
@@ -23,4 +24,10 @@ public class DatabaseImplementation implements Database {
     public List<Row> readDataFromTable(String tableName) {
         return repository.get(tableName);
     }
+
+    @Override
+    public void executeQuery(String query, List<String> lst) {
+            repository.executeQuery(query,lst);
+    }
+
 }

@@ -9,6 +9,7 @@ import resource.implementation.Entity;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 public class AddAction extends MyAbstractAction {
@@ -45,9 +46,29 @@ public class AddAction extends MyAbstractAction {
                 "Please Enter Values", JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
             System.out.println("OK");
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("INSERT INTO ");
+            stringBuilder.append(nt.getName());
+            stringBuilder.append(" ( ");
+            for(int i=0;i<nt.getChildren().size();i++){
+                if(i+1 == nt.getChildren().size()){
+                    stringBuilder.append(nt.getChildren().get(i).getName()+" ) VALUES (");
+                }else stringBuilder.append(nt.getChildren().get(i).getName()+", ");
+            }
+            for(int i=0;i<nt.getChildren().size();i++){
+                if(i+1 == nt.getChildren().size()){
+                    stringBuilder.append("? )");
+                }else stringBuilder.append(" ? ,");
+            }
+
+            System.out.println("StrBilder: "+stringBuilder);
+            ArrayList<String> lst = new ArrayList<>();
             for(int i=0;i<labels.size();i++){
                 System.out.println(labels.get(i).getText()+" "+fields.get(i).getText());
+                lst.add(fields.get(i).getText());
             }
+            System.out.println("Lista prosledjena :"+lst);
+            MainFrame.getInstance().getAppCore().getDatabase().executeQuery(stringBuilder.toString(),lst);
         }
 
     }

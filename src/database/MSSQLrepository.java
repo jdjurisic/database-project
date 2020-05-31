@@ -1,6 +1,7 @@
 package database;
 
 import database.settings.Settings;
+import gui.MainFrame;
 import lombok.Data;
 import resource.DBNode;
 import resource.DBNodeComposite;
@@ -12,6 +13,7 @@ import resource.implementation.AttributeConstraint;
 import resource.implementation.Entity;
 import resource.implementation.InformationResource;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -99,8 +101,8 @@ public class MSSQLrepository implements Repository{
             ResultSet tables1 = metaData.getTables(connection.getCatalog(),"dbo",null,tableType);
 
 
-            String fkTableName = null;
-            String fkColumnName = null;
+            String fkTableName;
+            String fkColumnName;
 
             while(tables1.next()){
                 String tableName1 = tables1.getString("TABLE_NAME");
@@ -181,4 +183,37 @@ public class MSSQLrepository implements Repository{
 
         return rows;
     }
+
+    @Override
+    public void executeQuery(String query, List<String> lst) {
+        System.out.println("Ispis iz msqlrepo:"+query +" lista "+lst);
+
+        try {
+            this.initConnection();
+
+            PreparedStatement st = connection.prepareStatement(query);
+            for(int i=0;i<lst.size();i++){
+                st.setString(i+1,lst.get(i));
+            }
+
+            int j = st.executeUpdate();
+            System.out.println("Izvrsavanje komadne:"+j);
+            st.close();
+
+           //TODO sredi ocitavanje apdejtovanih tabela
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            System.out.println(throwables.getMessage());
+            JOptionPane.showMessageDialog(null, throwables.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        finally {
+            this.closeConnection();
+
+        }
+    }
+
+
 }
