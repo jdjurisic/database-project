@@ -266,11 +266,11 @@ public class MSSQLrepository implements Repository{
 
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            System.out.println(throwables.getMessage());
+            //throwables.printStackTrace();
+            //System.out.println(throwables.getMessage());
             JOptionPane.showMessageDialog(null, throwables.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         finally {
             this.closeConnection();
@@ -319,11 +319,11 @@ public class MSSQLrepository implements Repository{
 
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            //throwables.printStackTrace();
            // System.out.println(throwables.getMessage());
             JOptionPane.showMessageDialog(null, throwables.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         finally {
             this.closeConnection();
@@ -334,6 +334,66 @@ public class MSSQLrepository implements Repository{
 
     @Override
     public void updateInTable(HashMap<String, Object> oldHashMap, HashMap<String, Object> newHashMap, String table) {
+
+        try {
+            this.initConnection();
+
+            StringBuilder newInput = new StringBuilder();
+            for (Map.Entry<String,Object> entry : newHashMap.entrySet()){
+                newInput.append(entry.getKey());
+                newInput.append(" ='");
+                newInput.append(entry.getValue());
+                newInput.append("' ,");
+            }
+            newInput.deleteCharAt(newInput.length()-1);
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("UPDATE ");
+            stringBuilder.append(table);
+            stringBuilder.append(" SET ");
+            // nova polja dodaj
+            stringBuilder.append(newInput);
+
+            stringBuilder.append(" WHERE ");
+            boolean firstTime=false;
+            for(Map.Entry<String,Object> entry : oldHashMap.entrySet()){
+                if(firstTime==false){
+                    firstTime=true;
+
+                }else{
+                    if(entry.getValue() != null) stringBuilder.append(" AND ");
+                }
+                if(entry.getValue() != null){
+                    stringBuilder.append(entry.getKey());
+                    stringBuilder.append("='");
+                    stringBuilder.append(entry.getValue().toString());
+                    stringBuilder.append("'");
+                }
+            }
+            stringBuilder.append(";");
+            //System.out.println(stringBuilder);
+
+
+
+            PreparedStatement st = connection.prepareStatement(stringBuilder.toString());
+            st.executeUpdate();
+
+            st.close();
+
+
+        } catch (SQLException throwables) {
+            //throwables.printStackTrace();
+            // System.out.println(throwables.getMessage());
+            JOptionPane.showMessageDialog(null, throwables.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        finally {
+            this.closeConnection();
+
+        }
+
+
 
     }
 
