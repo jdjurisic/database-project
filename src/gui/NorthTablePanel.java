@@ -39,7 +39,7 @@ public class NorthTablePanel extends JPanel {
                 int row = jTable.rowAtPoint(evt.getPoint());
                 int col = jTable.columnAtPoint(evt.getPoint());
                 if (row >= 0 && col >= 0) {
-                    //System.out.println("KLIK");
+
                 }
             }
         });
@@ -71,5 +71,9 @@ public class NorthTablePanel extends JPanel {
 
     public TableModel getTableModel() {
         return tableModel;
+    }
+
+    public JTable getjTable() {
+        return jTable;
     }
 }

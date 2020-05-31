@@ -129,8 +129,6 @@ public class MSSQLrepository implements Repository{
                 }
             }
 
-            //TODO Ogranicenja nad kolonama? Relacije?
-
             //System.out.println(ir);
             return ir;
             // String isNullable = columns.getString("IS_NULLABLE");
@@ -190,17 +188,19 @@ public class MSSQLrepository implements Repository{
 
         try {
             this.initConnection();
-
             PreparedStatement st = connection.prepareStatement(query);
-            for(int i=0;i<lst.size();i++){
-                st.setString(i+1,lst.get(i));
+
+            if(lst !=null){
+                for(int i=0;i<lst.size();i++){
+                    st.setString(i+1,lst.get(i));
+                }
             }
+
 
             int j = st.executeUpdate();
             System.out.println("Izvrsavanje komadne:"+j);
             st.close();
 
-           //TODO sredi ocitavanje apdejtovanih tabela
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

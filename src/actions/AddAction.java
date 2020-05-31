@@ -69,9 +69,7 @@ public class AddAction extends MyAbstractAction {
                 lst.add(fields.get(i).getText());
             }
             System.out.println("Lista prosledjena :"+lst);
-            MainFrame.getInstance().getAppCore().addTableModel(stringBuilder.toString(),lst,
-                    ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel(),
-                    nt.getName());
+            MainFrame.getInstance().getAppCore().executeQuery(stringBuilder.toString(),lst, ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel(), nt.getName());
         }
 
     }

@@ -63,7 +63,7 @@ public class AppCore extends PublisherImplementation {
         return tableModel;
     }
 
-    public void addTableModel(String query, List<String> lst, TableModel tableModel, String tablename){
+    public void executeQuery(String query, List<String> lst, TableModel tableModel, String tablename){
         getDatabase().executeQuery(query, lst);
         tableModel.setRows(this.database.readDataFromTable(tablename));
     }
