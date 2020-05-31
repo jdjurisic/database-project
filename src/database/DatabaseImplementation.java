@@ -46,4 +46,15 @@ public class DatabaseImplementation implements Database {
         repository.updateInTable(oldHashMap, newHashMap, table);
     }
 
+    @Override
+    public void filterAndSortInTable(HashMap<String, String> hashMap,String columns, String tableName) {
+        repository.filterAndSortInTable(hashMap, columns, tableName);
+    }
+
+
+    @Override
+    public void clickOnTable(String query, String tableName) {
+        repository.clickOnTable(query, tableName);
+    }
+
 }

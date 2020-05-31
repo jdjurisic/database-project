@@ -397,5 +397,15 @@ public class MSSQLrepository implements Repository{
 
     }
 
+    @Override
+    public void filterAndSortInTable(HashMap<String, String> hashMap, String columns, String tableName) {
+        
+    }
+
+    @Override
+    public void clickOnTable(String query, String tableName) {
+
+    }
+
 
 }

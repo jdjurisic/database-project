@@ -23,5 +23,27 @@ public class NorthToolBar extends JToolBar {
         add(MainFrame.getInstance().getActionManager().getDeleteAction());
         this.add(Box.createHorizontalStrut(5));
         addSeparator();
+
+        this.add(Box.createHorizontalStrut(5));
+        add(MainFrame.getInstance().getActionManager().getFilterAndSort());
+        this.add(Box.createHorizontalStrut(5));
+        addSeparator();
+
+        this.add(Box.createHorizontalStrut(5));
+        add(MainFrame.getInstance().getActionManager().getSearch());
+        this.add(Box.createHorizontalStrut(5));
+        addSeparator();
+
+        this.add(Box.createHorizontalStrut(5));
+        add(MainFrame.getInstance().getActionManager().getAverage());
+        this.add(Box.createHorizontalStrut(5));
+        addSeparator();
+
+        this.add(Box.createHorizontalStrut(5));
+        add(MainFrame.getInstance().getActionManager().getCount());
+        this.add(Box.createHorizontalStrut(5));
+        addSeparator();
+
+
     }
 }

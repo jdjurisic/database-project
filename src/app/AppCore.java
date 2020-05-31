@@ -84,6 +84,16 @@ public class AppCore extends PublisherImplementation {
         tableModel.setRows(this.database.readDataFromTable(tablename));
     }
 
+    public void filterAndSort(HashMap<String, String> hashMap, String columns, String tableName, TableModel tableModel){
+        getDatabase().filterAndSortInTable(hashMap, columns, tableName);
+        tableModel.setRows(this.database.readDataFromTable(tableName));
+
+    }
+
+    public  void clickOnRow(String query,  String tableName, TableModel tableModel){
+        getDatabase().clickOnTable(query, tableName);
+        tableModel.setRows(this.database.readDataFromTable(tableName));
+    }
 
     public TableModel getTableModel() {
         return tableModel;

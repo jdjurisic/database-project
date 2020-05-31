@@ -20,4 +20,8 @@ public interface Repository {
     void deleteInTable(HashMap<String, Object> hashMap, String table);
 
     void updateInTable(HashMap<String, Object> oldHashMap, HashMap<String, Object> newHashMap,String table);
+
+    void filterAndSortInTable(HashMap<String, String> hashMap, String columns, String tableName);
+
+    void clickOnTable(String query,  String tableName);
 }

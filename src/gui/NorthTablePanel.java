@@ -5,6 +5,9 @@ import resource.implementation.Entity;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class NorthTablePanel extends JPanel {
 
@@ -33,16 +36,19 @@ public class NorthTablePanel extends JPanel {
 //            }
 //        });
          //mouse adapter
-        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+       /* jTable.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+            public void mouseClicked(MouseEvent evt) {
                 int row = jTable.rowAtPoint(evt.getPoint());
                 int col = jTable.columnAtPoint(evt.getPoint());
                 if (row >= 0 && col >= 0) {
-
+                    System.out.println("22");
                 }
             }
-        });
+        });*/
+
+
+        jTable.addMouseListener(MainFrame.getInstance().getActionManager().getClickOnRow());
 
 
 
