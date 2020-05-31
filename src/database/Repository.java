@@ -18,4 +18,6 @@ public interface Repository {
     void addInTable(HashMap<String, String> hashMap, String tableName);
 
     void deleteInTable(HashMap<String, Object> hashMap, String table);
+
+    void updateInTable(HashMap<String, Object> oldHashMap, HashMap<String, Object> newHashMap,String table);
 }

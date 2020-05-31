@@ -19,5 +19,7 @@ public interface Database{
 
     void deleteInTable(HashMap<String, Object> hashMap, String table);
 
+    void updateInTable(HashMap<String, Object> oldHashMap, HashMap<String, Object> newHashMap,String table);
+
 
 }

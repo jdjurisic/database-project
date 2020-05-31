@@ -332,5 +332,10 @@ public class MSSQLrepository implements Repository{
 
     }
 
+    @Override
+    public void updateInTable(HashMap<String, Object> oldHashMap, HashMap<String, Object> newHashMap, String table) {
+
+    }
+
 
 }

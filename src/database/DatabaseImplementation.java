@@ -41,4 +41,9 @@ public class DatabaseImplementation implements Database {
         repository.deleteInTable(hashMap, table);
     }
 
+    @Override
+    public void updateInTable(HashMap<String, Object> oldHashMap, HashMap<String, Object> newHashMap, String table) {
+        repository.updateInTable(oldHashMap, newHashMap, table);
+    }
+
 }

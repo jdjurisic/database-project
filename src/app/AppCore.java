@@ -79,6 +79,11 @@ public class AppCore extends PublisherImplementation {
         tableModel.setRows(this.database.readDataFromTable(tablename));
     }
 
+    public void updateToTable(HashMap<String, Object> oldHashMap, HashMap<String, Object> newHashMap,  TableModel tableModel, String tablename){
+        getDatabase().updateInTable(oldHashMap, newHashMap, tablename);
+        tableModel.setRows(this.database.readDataFromTable(tablename));
+    }
+
 
     public TableModel getTableModel() {
         return tableModel;
