@@ -14,6 +14,7 @@ import observer.implementation.PublisherImplementation;
 import resource.implementation.InformationResource;
 import utils.Constants;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Data
@@ -65,6 +66,16 @@ public class AppCore extends PublisherImplementation {
 
     public void executeQuery(String query, List<String> lst, TableModel tableModel, String tablename){
         getDatabase().executeQuery(query, lst);
+        tableModel.setRows(this.database.readDataFromTable(tablename));
+    }
+
+    public void addToTable(HashMap<String, String> hashMap, TableModel tableModel, String tablename){
+        getDatabase().addInTable(hashMap, tablename);
+        tableModel.setRows(this.database.readDataFromTable(tablename));
+    }
+
+    public void deleteToTable(HashMap<String, Object> hashMap, TableModel tableModel, String tablename){
+        getDatabase().deleteInTable(hashMap, tablename);
         tableModel.setRows(this.database.readDataFromTable(tablename));
     }
 

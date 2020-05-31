@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AddAction extends MyAbstractAction {
 
@@ -21,10 +22,10 @@ public class AddAction extends MyAbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Add action");
+        //System.out.println("Add action");
         Entity nt = ((NorthTablePanel)MainFrame.getInstance().getNorthTab().getSelectedComponent()).getEntity();
 
-        System.out.println(nt);
+        //System.out.println(nt);
 
         ArrayList<JTextField> fields = new ArrayList<>();
         ArrayList<JLabel> labels = new ArrayList<>();
@@ -46,7 +47,7 @@ public class AddAction extends MyAbstractAction {
         int result = JOptionPane.showConfirmDialog(null, myPanel,
                 "Please Enter Values", JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
-            System.out.println("OK");
+            /*System.out.println("OK");
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("INSERT INTO ");
             stringBuilder.append(nt.getName());
@@ -60,16 +61,19 @@ public class AddAction extends MyAbstractAction {
                 if(i+1 == nt.getChildren().size()){
                     stringBuilder.append("? )");
                 }else stringBuilder.append(" ? ,");
-            }
+            }*/
 
-            System.out.println("StrBilder: "+stringBuilder);
-            ArrayList<String> lst = new ArrayList<>();
+            //System.out.println("StrBilder: "+stringBuilder);
+           // ArrayList<String> lst = new ArrayList<>();
+            HashMap<String, String> hashMap = new HashMap<>();
             for(int i=0;i<labels.size();i++){
-                System.out.println(labels.get(i).getText()+" "+fields.get(i).getText());
-                lst.add(fields.get(i).getText());
+                //System.out.println(labels.get(i).getText()+" "+fields.get(i).getText());
+                //lst.add(fields.get(i).getText());
+                hashMap.put(labels.get(i).getText(), fields.get(i).getText());
             }
-            System.out.println("Lista prosledjena :"+lst);
-            MainFrame.getInstance().getAppCore().executeQuery(stringBuilder.toString(),lst, ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel(), nt.getName());
+            //System.out.println("Lista prosledjena :"+lst);
+            //MainFrame.getInstance().getAppCore().executeQuery(stringBuilder.toString(),lst, ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel(), nt.getName());
+            MainFrame.getInstance().getAppCore().addToTable(hashMap, ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel(), nt.getName());
         }
 
     }

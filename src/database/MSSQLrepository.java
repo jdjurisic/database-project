@@ -16,7 +16,9 @@ import resource.implementation.InformationResource;
 import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 public class MSSQLrepository implements Repository{
@@ -213,6 +215,121 @@ public class MSSQLrepository implements Repository{
             this.closeConnection();
 
         }
+    }
+
+    @Override
+    public void addInTable(HashMap<String, String> hashMap, String tableName) {
+
+        try {
+            this.initConnection();
+            //String query = "INSERT INTO " + tableName + "(";
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("INSERT INTO ");
+            stringBuilder.append(tableName);
+            //System.out.println(hashMap.size());
+            stringBuilder.append(" ( ");
+            int z=1;
+            for (Map.Entry<String, String> entry: hashMap.entrySet()) {
+
+                if(z == hashMap.size()){
+                    stringBuilder.append(entry.getKey().toString()+" ) VALUES (");
+                }else stringBuilder.append(entry.getKey().toString()+", ");
+                z++;
+            }
+
+
+            for(int i=0;i<hashMap.size();i++){
+                if(i+1 == hashMap.size()){
+                    stringBuilder.append("? )");
+                }else stringBuilder.append(" ? ,");
+            }
+            //System.out.println(stringBuilder.toString());
+            //System.out.println(hashMap);
+            PreparedStatement st = connection.prepareStatement(stringBuilder.toString());
+           // int i = 1;
+            /*for (Map.Entry<String, String> entry: hashMap.entrySet()) {
+                st.setString(i,entry.getKey().toString());
+                System.out.println(i+ "  "+ entry.getKey());
+                i++;
+
+            }*/
+            int i = 1;
+            for (Map.Entry<String, String> entry: hashMap.entrySet()) {
+                st.setString(i,entry.getValue());
+                //System.out.println(i+ "  "+ entry.getValue());
+                i++;
+            }
+            //System.out.println(st.toString());
+            st.executeUpdate();
+            st.close();
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            System.out.println(throwables.getMessage());
+            JOptionPane.showMessageDialog(null, throwables.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        finally {
+            this.closeConnection();
+
+        }
+
+
+
+
+    }
+
+    @Override
+    public void deleteInTable(HashMap<String, Object> hashMap, String table) {
+
+
+        try {
+            this.initConnection();
+
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("DELETE FROM ");
+            stringBuilder.append(table);
+            stringBuilder.append(" WHERE ");
+            boolean firstTime=false;
+            for(Map.Entry<String,Object> entry : hashMap.entrySet()){
+                if(firstTime==false){
+                    firstTime=true;
+
+                }else{
+                    if(entry.getValue() != null)stringBuilder.append(" AND ");
+                }
+                if(entry.getValue() != null){
+                    stringBuilder.append(entry.getKey());
+                    stringBuilder.append("='");
+                    stringBuilder.append(entry.getValue().toString());
+                    stringBuilder.append("'");
+                }
+
+            }
+            stringBuilder.append(";");
+           // System.out.println(stringBuilder.toString());
+            PreparedStatement st = connection.prepareStatement(stringBuilder.toString());
+            st.executeUpdate();
+
+            st.close();
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+           // System.out.println(throwables.getMessage());
+            JOptionPane.showMessageDialog(null, throwables.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        finally {
+            this.closeConnection();
+
+        }
+
     }
 
 
