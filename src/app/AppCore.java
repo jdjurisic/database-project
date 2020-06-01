@@ -15,6 +15,7 @@ import observer.implementation.PublisherImplementation;
 import resource.implementation.InformationResource;
 import utils.Constants;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -85,21 +86,7 @@ public class AppCore extends PublisherImplementation {
         tableModel.setRows(this.database.readDataFromTable(tablename));
     }
 
-   /* public TableModel filterAndSort(HashMap<String, String> hashMap, String columns, String tableName){
 
-
-        TableModel tableModel = new TableModel();
-        tableModel.setRows(getDatabase().filterAndSortInTable(hashMap, columns, tableName));
-        return tableModel;
-
-    }*/
-
-    public void filterAndSort(HashMap<String, String> hashMap, String columns, String tableName, TableModel tableModel){
-        //getDatabase().filterAndSortInTable(hashMap, columns, tableName);
-        tableModel.setRows(getDatabase().filterAndSortInTable(hashMap, columns, tableName));
-        //ChangeSouthPanel.change();
-
-    }
 
     public  TableModel clickOnRow(String query,  String tableName){
         TableModel tableModel = new TableModel();
@@ -107,9 +94,24 @@ public class AppCore extends PublisherImplementation {
         return tableModel;
     }
 
+    public void filterAndSort(HashMap<String, String> hashMap, String columns, String tableName, TableModel tableModel){
+
+        tableModel.setRows(getDatabase().filterAndSortInTable(hashMap, columns, tableName));
+
+
+    }
+
     public void removeFilter(String fromTable, TableModel tableModel){
         tableModel.setRows(this.database.readDataFromTable(fromTable));
 
+    }
+
+    public void avgColumn(String tableName, String avgColumn, ArrayList<String> groupBy, TableModel tableModel){
+        tableModel.setRows(getDatabase().avgOnTable( tableName, avgColumn,  groupBy));
+    }
+
+    public void countColumn(String tableName, String countColumn, ArrayList<String> groupBy, TableModel tableModel){
+        tableModel.setRows(getDatabase().countOnTable( tableName, countColumn,  groupBy));
     }
 
     public TableModel getTableModel() {

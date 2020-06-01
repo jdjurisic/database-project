@@ -6,6 +6,7 @@ import resource.DBNode;
 import resource.data.Row;
 
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -55,6 +56,16 @@ public class DatabaseImplementation implements Database {
     @Override
     public List<Row> clickOnTable(String query, String tableName) {
         return repository.clickOnTable(query, tableName);
+    }
+
+    @Override
+    public List<Row> countOnTable(String tableName, String columnCount, ArrayList<String> groupBy) {
+        return repository.countOnTable(tableName, columnCount, groupBy);
+    }
+
+    @Override
+    public List<Row> avgOnTable(String tableName, String avgColumn, ArrayList<String> groupBy) {
+        return repository.avgOnTable(tableName, avgColumn, groupBy);
     }
 
 }

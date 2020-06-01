@@ -4,6 +4,7 @@ import resource.DBNode;
 import resource.data.Row;
 
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,6 +25,10 @@ public interface Database{
     List<Row> filterAndSortInTable(HashMap<String, String> hashMap, String columns, String tableName);
 
     List<Row> clickOnTable(String query,  String tableName);
+
+    List<Row> countOnTable(String tableName, String columnCount, ArrayList<String> groupBy);
+
+    List<Row> avgOnTable(String tableName, String avgColumn, ArrayList<String> groupBy);
 
 
 }

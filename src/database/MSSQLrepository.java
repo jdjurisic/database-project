@@ -493,5 +493,15 @@ public class MSSQLrepository implements Repository{
 
     }
 
+    @Override
+    public List<Row> countOnTable(String tableName, String columnCount, ArrayList<String> groupBy) {
+        return null;
+    }
+
+    @Override
+    public List<Row> avgOnTable(String tableName, String avgColumn, ArrayList<String> groupBy) {
+        return null;
+    }
+
 
 }
