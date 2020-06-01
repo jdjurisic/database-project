@@ -54,7 +54,6 @@ public class DeleteAction extends MyAbstractAction {
         }
         stringBuilder.append(";");
         System.out.println(stringBuilder);*/
-        String konst = "DELETE FROM REGIONS WHERE region_id='6.0' AND region_name='Westeros';";
         //MainFrame.getInstance().getAppCore().executeQuery(konst,null,((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel(),ntp.getEntity().getName());
         MainFrame.getInstance().getAppCore().deleteToTable((HashMap<String, Object>) currentRow.getFields(),
                 ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel(),

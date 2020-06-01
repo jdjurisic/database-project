@@ -25,6 +25,7 @@ public class NorthTablePanel extends JPanel {
 
         jTable = new JTable();
         jTable.setDefaultEditor(Object.class, null);
+        jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         //
 

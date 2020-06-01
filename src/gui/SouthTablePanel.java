@@ -26,5 +26,8 @@ public class SouthTablePanel extends JPanel {
         jTable.setFillsViewportHeight(true);
         this.add(new JScrollPane(jTable), BorderLayout.NORTH);
         jTable.setModel(this.tableModel);
+        jTable.setDefaultEditor(Object.class, null);
+        jTable.setFocusable(false);
+        jTable.setRowSelectionAllowed(false);
     }
 }
