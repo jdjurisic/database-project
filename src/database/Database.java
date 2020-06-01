@@ -21,7 +21,7 @@ public interface Database{
 
     void updateInTable(HashMap<String, Object> oldHashMap, HashMap<String, Object> newHashMap,String table);
 
-    void filterAndSortInTable(HashMap<String, String> hashMap, String columns, String tableName);
+    List<Row> filterAndSortInTable(HashMap<String, String> hashMap, String columns, String tableName);
 
     List<Row> clickOnTable(String query,  String tableName);
 

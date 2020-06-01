@@ -84,9 +84,18 @@ public class AppCore extends PublisherImplementation {
         tableModel.setRows(this.database.readDataFromTable(tablename));
     }
 
+   /* public TableModel filterAndSort(HashMap<String, String> hashMap, String columns, String tableName){
+
+
+        TableModel tableModel = new TableModel();
+        tableModel.setRows(getDatabase().filterAndSortInTable(hashMap, columns, tableName));
+        return tableModel;
+
+    }*/
+
     public void filterAndSort(HashMap<String, String> hashMap, String columns, String tableName, TableModel tableModel){
-        getDatabase().filterAndSortInTable(hashMap, columns, tableName);
-        tableModel.setRows(this.database.readDataFromTable(tableName));
+        //getDatabase().filterAndSortInTable(hashMap, columns, tableName);
+        tableModel.setRows(getDatabase().filterAndSortInTable(hashMap, columns, tableName));
 
     }
 
@@ -94,6 +103,11 @@ public class AppCore extends PublisherImplementation {
         TableModel tableModel = new TableModel();
         tableModel.setRows(getDatabase().clickOnTable(query, tableName));
         return tableModel;
+    }
+
+    public void removeFilter(String fromTable, TableModel tableModel){
+        tableModel.setRows(this.database.readDataFromTable(fromTable));
+
     }
 
     public TableModel getTableModel() {

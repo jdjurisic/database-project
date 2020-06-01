@@ -48,7 +48,12 @@ public class FilterAndSort extends MyAbstractAction{
             }
             cols.deleteCharAt(cols.length()-1);
             System.out.println(cols.toString());
-            MainFrame.getInstance().getAppCore().filterAndSort(null,cols.toString(),nt.getName(),((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel());
+
+            MainFrame.getInstance().getAppCore().filterAndSort(null,cols.toString(),
+                    nt.getName(),
+                    ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel());
+            /*MainFrame.getInstance().getNorthTab().addTabWithTable(nt,
+                    MainFrame.getInstance().getAppCore().filterAndSort(null,cols.toString(),nt.getName()));*/
         }
 
     }

@@ -47,8 +47,8 @@ public class DatabaseImplementation implements Database {
     }
 
     @Override
-    public void filterAndSortInTable(HashMap<String, String> hashMap,String columns, String tableName) {
-        repository.filterAndSortInTable(hashMap, columns, tableName);
+    public List<Row> filterAndSortInTable(HashMap<String, String> hashMap,String columns, String tableName) {
+        return repository.filterAndSortInTable(hashMap, columns, tableName);
     }
 
 

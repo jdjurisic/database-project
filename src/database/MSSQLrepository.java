@@ -408,7 +408,40 @@ public class MSSQLrepository implements Repository{
     }
 
     @Override
-    public void filterAndSortInTable(HashMap<String, String> hashMap, String columns, String tableName) {
+    public List<Row> filterAndSortInTable(HashMap<String, String> hashMap, String columns, String tableName) {
+
+        List<Row> rows = new ArrayList<>();
+
+
+        try{
+            this.initConnection();
+
+            String queryToSend = "SELECT " + columns + " FROM " + tableName;
+            System.out.println(queryToSend);
+            PreparedStatement preparedStatement = connection.prepareStatement(queryToSend);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()){
+
+                Row row = new Row();
+                row.setName(tableName);
+
+                ResultSetMetaData resultSetMetaData = rs.getMetaData();
+                for (int i = 1; i<=resultSetMetaData.getColumnCount(); i++){
+                    row.addField(resultSetMetaData.getColumnName(i), rs.getString(i));
+                }
+                rows.add(row);
+
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            this.closeConnection();
+        }
+        //System.out.println(rows);
+        return rows;
 
     }
 

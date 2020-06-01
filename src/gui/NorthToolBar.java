@@ -30,6 +30,11 @@ public class NorthToolBar extends JToolBar {
         addSeparator();
 
         this.add(Box.createHorizontalStrut(5));
+        add(MainFrame.getInstance().getActionManager().getRemoveFilter());
+        this.add(Box.createHorizontalStrut(5));
+        addSeparator();
+
+        this.add(Box.createHorizontalStrut(5));
         add(MainFrame.getInstance().getActionManager().getSearch());
         this.add(Box.createHorizontalStrut(5));
         addSeparator();

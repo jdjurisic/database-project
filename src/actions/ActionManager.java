@@ -13,6 +13,7 @@ public class ActionManager {
 	private Search search;
 	private  Average average;
 	private Count count;
+	private RemoveFilter removeFilter;
 
 	public ActionManager() {
 		addAction = new AddAction();
@@ -24,6 +25,7 @@ public class ActionManager {
 		search = new Search();
 		average = new Average();
 		count =  new Count();
+		removeFilter = new RemoveFilter();
 
 
 
@@ -63,5 +65,9 @@ public class ActionManager {
 
 	public Count getCount() {
 		return count;
+	}
+
+	public RemoveFilter getRemoveFilter() {
+		return removeFilter;
 	}
 }
