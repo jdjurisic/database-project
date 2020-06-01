@@ -18,7 +18,7 @@ public class MyTree extends JTree{
 		addTreeSelectionListener(new MyTreeSelectionListener());
 		setCellEditor(new MyEditTree(this, new DefaultTreeCellRenderer()));
 		setCellRenderer(new MyTreeRendered());
-		setEditable(true);
+		setEditable(false);
 		addMouseListener(new TreeMouseListener());//dodavanje popUPmenija
 		
 	}

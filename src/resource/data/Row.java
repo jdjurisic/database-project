@@ -3,6 +3,7 @@ package resource.data;
 import lombok.Data;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Data
@@ -13,7 +14,7 @@ public class Row {
 
 
     public Row() {
-        this.fields = new HashMap<>();
+        this.fields = new LinkedHashMap<>();
     }
 
     public void addField(String fieldName, Object value) {

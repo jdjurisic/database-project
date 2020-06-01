@@ -9,6 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class FilterAndSort extends MyAbstractAction{
 
@@ -23,6 +26,8 @@ public class FilterAndSort extends MyAbstractAction{
         Entity nt = ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getEntity();
 
         ArrayList<JCheckBox> checkBoxes = new ArrayList<>();
+        ArrayList<JComboBox> comboBoxes = new ArrayList<>();
+        String[] ascdesc = { "ASC", "DESC" };
 
         JPanel myPanel = new JPanel();
         GridLayout gr = new GridLayout(nt.getChildren().size(),2,2,2);
@@ -30,12 +35,15 @@ public class FilterAndSort extends MyAbstractAction{
 
         for(DBNode a: nt.getChildren()){
             checkBoxes.add(new JCheckBox(a.getName()));
+            comboBoxes.add(new JComboBox(ascdesc));
         }
 
         for(int i=0;i<checkBoxes.size();i++){
             myPanel.add(checkBoxes.get(i));
+            myPanel.add(comboBoxes.get(i));
         }
 
+        LinkedHashMap<String ,String> sortValues = new LinkedHashMap<>();
         StringBuilder cols = new StringBuilder();
         int result = JOptionPane.showConfirmDialog(null, myPanel,
                 "Please Select Filter Columns", JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
@@ -44,14 +52,22 @@ public class FilterAndSort extends MyAbstractAction{
                 if(j.isSelected()){
                     cols.append(j.getText());
                     cols.append(",");
+                    //System.out.println("Indeks izabranog :"+checkBoxes.indexOf(j)+comboBoxes.get(checkBoxes.indexOf(j)).getSelectedItem());
+                    sortValues.put(j.getText(),comboBoxes.get(checkBoxes.indexOf(j)).getSelectedItem().toString());
                 }
             }
-            cols.deleteCharAt(cols.length()-1);
-            System.out.println(cols.toString());
+            if(cols.length() >0) {
+                cols.deleteCharAt(cols.length()-1);
+                //System.out.println(cols.toString());
 
-            MainFrame.getInstance().getAppCore().filterAndSort(null,cols.toString(),
-                    nt.getName(),
-                    ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel());
+             // mapa sa vrednostima za sort
+//                for (HashMap.Entry<String,String> entry : sortValues.entrySet()){
+//                    System.out.println("Izlaz:"+entry.getKey()+entry.getValue());
+//                }
+                MainFrame.getInstance().getAppCore().filterAndSort(sortValues,cols.toString(),
+                        nt.getName(),
+                        ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel());
+            }
             /*MainFrame.getInstance().getNorthTab().addTabWithTable(nt,
                     MainFrame.getInstance().getAppCore().filterAndSort(null,cols.toString(),nt.getName()));*/
         }

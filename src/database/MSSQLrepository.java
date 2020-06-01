@@ -411,12 +411,22 @@ public class MSSQLrepository implements Repository{
     public List<Row> filterAndSortInTable(HashMap<String, String> hashMap, String columns, String tableName) {
 
         List<Row> rows = new ArrayList<>();
-
+        StringBuilder sortCondition = new StringBuilder();
+        sortCondition.append(" ORDER BY ");
+        for(Map.Entry<String,String> entry : hashMap.entrySet()){
+            //System.out.println("iz f-je:"+entry);
+            sortCondition.append(entry.getKey());
+            sortCondition.append(" ");
+            sortCondition.append(entry.getValue());
+            sortCondition.append(" , ");
+        }
+        sortCondition.deleteCharAt(sortCondition.lastIndexOf(","));
+        sortCondition.append(";");
 
         try{
             this.initConnection();
 
-            String queryToSend = "SELECT " + columns + " FROM " + tableName;
+            String queryToSend = "SELECT " + columns + " FROM " + tableName + sortCondition.toString();
             System.out.println(queryToSend);
             PreparedStatement preparedStatement = connection.prepareStatement(queryToSend);
             ResultSet rs = preparedStatement.executeQuery();
