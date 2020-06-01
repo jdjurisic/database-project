@@ -427,7 +427,7 @@ public class MSSQLrepository implements Repository{
             this.initConnection();
 
             String queryToSend = "SELECT " + columns + " FROM " + tableName + sortCondition.toString();
-            System.out.println(queryToSend);
+            //System.out.println(queryToSend);
             PreparedStatement preparedStatement = connection.prepareStatement(queryToSend);
             ResultSet rs = preparedStatement.executeQuery();
 

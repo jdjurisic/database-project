@@ -22,7 +22,7 @@ public class FilterAndSort extends MyAbstractAction{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("filter");
+        //System.out.println("filter");
         Entity nt = ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getEntity();
 
         ArrayList<JCheckBox> checkBoxes = new ArrayList<>();
@@ -68,11 +68,14 @@ public class FilterAndSort extends MyAbstractAction{
                         nt.getName(),
                         ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel());
 
+
+
             }
             /*MainFrame.getInstance().getNorthTab().addTabWithTable(nt,
                     MainFrame.getInstance().getAppCore().filterAndSort(null,cols.toString(),nt.getName()));*/
 
         }
-
+        //System.out.println("aa");
+        ChangeSouthPanel.change();
     }
 }
