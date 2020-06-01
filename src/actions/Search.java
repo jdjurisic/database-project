@@ -52,9 +52,10 @@ public class Search extends MyAbstractAction {
         JLabel qLabel = new JLabel("        Enter value");
         JTextField query = new JTextField();
         query.setEnabled(false);
+        query.setBorder(blackline);
 
         JPanel myPanel = new JPanel();
-        myPanel.setLayout(new BorderLayout());
+        myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS ));
 
         JPanel colPanel = new JPanel();
         GridLayout gr = new GridLayout(0,4,5,5);
@@ -63,7 +64,7 @@ public class Search extends MyAbstractAction {
             colPanel.add(jbtn);
         }
         colPanel.setBorder(blackline);
-        myPanel.add(colPanel,BorderLayout.NORTH);
+        myPanel.add(colPanel);
 
         JPanel opPanel = new JPanel();
         GridLayout gr2 = new GridLayout(0,4,2,2);
@@ -72,7 +73,7 @@ public class Search extends MyAbstractAction {
             opPanel.add(jbtn2);
         }
         opPanel.setBorder(blackline);
-        myPanel.add(opPanel,BorderLayout.CENTER);
+        myPanel.add(opPanel);
 
         JPanel valuePanel = new JPanel();
         GridLayout gr3 = new GridLayout(0,2,5,5);
@@ -83,9 +84,10 @@ public class Search extends MyAbstractAction {
         valuePanel.add(queryValue);
         valuePanel.add(andButton);
         valuePanel.add(orButton);
-        valuePanel.add(new JButton("        Query preview"));
-        valuePanel.add(query);
-        myPanel.add(valuePanel,BorderLayout.SOUTH);
+        //valuePanel.add(new JButton("        Query preview"));
+        //valuePanel.add(query);
+        myPanel.add(valuePanel);
+        myPanel.add(query);
 
 
 
