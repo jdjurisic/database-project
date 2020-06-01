@@ -20,5 +20,6 @@ public class RemoveFilter extends MyAbstractAction {
 
         MainFrame.getInstance().getAppCore().removeFilter(entity.getName(),
                 ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel());
+        ChangeSouthPanel.change();
     }
 }

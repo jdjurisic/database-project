@@ -1,6 +1,7 @@
 package app;
 
 import actions.ActionManager;
+import actions.ChangeSouthPanel;
 import database.Database;
 import database.DatabaseImplementation;
 import database.MSSQLrepository;
@@ -96,6 +97,7 @@ public class AppCore extends PublisherImplementation {
     public void filterAndSort(HashMap<String, String> hashMap, String columns, String tableName, TableModel tableModel){
         //getDatabase().filterAndSortInTable(hashMap, columns, tableName);
         tableModel.setRows(getDatabase().filterAndSortInTable(hashMap, columns, tableName));
+        //ChangeSouthPanel.change();
 
     }
 

@@ -67,9 +67,11 @@ public class FilterAndSort extends MyAbstractAction{
                 MainFrame.getInstance().getAppCore().filterAndSort(sortValues,cols.toString(),
                         nt.getName(),
                         ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel());
+
             }
             /*MainFrame.getInstance().getNorthTab().addTabWithTable(nt,
                     MainFrame.getInstance().getAppCore().filterAndSort(null,cols.toString(),nt.getName()));*/
+
         }
 
     }
