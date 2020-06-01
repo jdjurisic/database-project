@@ -24,6 +24,7 @@ public class ClickOnRow extends MouseAdapter {
 
             if(dbNode instanceof Attribute){
                 String foreigK="1";
+                String primaryK = "2";
                 Attribute attribute = (Attribute) dbNode;
                 for(DBNode dbNodeInAttribute:attribute.getChildren()){
                     if(dbNodeInAttribute instanceof AttributeConstraint){
@@ -32,24 +33,53 @@ public class ClickOnRow extends MouseAdapter {
                             foreigK = attribute.getName().toString();
                             break;
                         }
+                        /*if(attributeConstraint.getConstraintType()== ConstraintType.PRIMARY_KEY) {
+                            primaryK = attribute.getName().toString();
+                            break;
+                        }*/
 
                     }
                 }
 
                 if(attribute.getInRelationWith()!=null) {
-
+                    Attribute atrVeza = attribute.getInRelationWith();
                     NorthTablePanel ntp = (NorthTablePanel)MainFrame.getInstance().getNorthTab().getSelectedComponent();
                     Row currentRow = ntp.getTableModel().getRows().get(ntp.getjTable().getSelectedRow());
-                    String foreigValue =(String) currentRow.getFields().get(foreigK);
-                    String query = foreigK+"='"+foreigValue+"'";
-                    //System.out.println(query);
-                    if (foreigValue == null)
-                        continue;
 
-                    Attribute atrVeza = attribute.getInRelationWith();
+
+
                     if(atrVeza.getParent() instanceof  Entity) {
-
                         Entity tableStraniKljuc = (Entity) atrVeza.getParent();
+                        String foreigValue =(String) currentRow.getFields().get(foreigK);
+                        if(dbNode.getParent().getName().equals(tableStraniKljuc.getName())) {
+
+                            for (DBNode dbNode1:entity.getChildren()) {
+
+                                if (dbNode1 instanceof Attribute) {
+
+                                    Attribute attribute1 = (Attribute) dbNode1;
+                                    for (DBNode dbNodeInAttribute1 : attribute1.getChildren()) {
+                                        if (dbNodeInAttribute1 instanceof AttributeConstraint) {
+                                            AttributeConstraint attributeConstraint1 = (AttributeConstraint) dbNodeInAttribute1;
+
+                                            if(attributeConstraint1.getConstraintType()== ConstraintType.PRIMARY_KEY) {
+                                                foreigK = attribute1.getName().toString();
+                                                break;
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+
+
+                        }
+                        String query = foreigK+"='"+foreigValue+"'";
+                        //System.out.println(query);
+                        if (foreigValue == null)
+                            continue;
+
+
                         //System.out.println(tableStraniKljuc.getName().toString());
 
                         MainFrame.getInstance().getSouthTab().addTabWithTable(tableStraniKljuc,

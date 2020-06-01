@@ -105,6 +105,7 @@ public class MSSQLrepository implements Repository{
 
             String fkTableName;
             String fkColumnName;
+            String pkColumnName;
 
             while(tables1.next()){
                 String tableName1 = tables1.getString("TABLE_NAME");
@@ -114,7 +115,16 @@ public class MSSQLrepository implements Repository{
 
                     fkTableName = foreignKeys.getString("PKTABLE_NAME");
                     fkColumnName = foreignKeys.getString("FKCOLUMN_NAME");
-                    if(fkTableName.equals(tableName1))continue;
+                    pkColumnName = foreignKeys.getString("PKCOLUMN_NAME");
+                    if(fkTableName.equals(tableName1)){
+                        Entity tabela = (Entity)ir.getChildByName(tableName1);
+                        Attribute atr = (Attribute)tabela.getChildByName(fkColumnName);
+                        Attribute atrVeza = (Attribute) tabela.getChildByName(pkColumnName);
+                        atr.setInRelationWith(atrVeza);
+                        atr.addChild(new AttributeConstraint(ConstraintType.FOREIGN_KEY.toString(),atr,ConstraintType.FOREIGN_KEY));
+
+                        break;
+                    }
                     //System.out.println("Tabela:"+tableName1 +"strani kljuc iz tabele:"+fkTableName +" "+ fkColumnName);
                     Entity tabela = (Entity)ir.getChildByName(tableName1);
                     Attribute atr = (Attribute)tabela.getChildByName(fkColumnName);
