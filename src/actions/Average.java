@@ -22,7 +22,7 @@ public class Average extends MyAbstractAction{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Average");
+
         Entity nt = ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getEntity();
 
         ArrayList<JRadioButton> columnButtons = new ArrayList<>();
@@ -87,12 +87,6 @@ public class Average extends MyAbstractAction{
                         ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel());
             }
         }
-
-
-
-
-
-
 
     }
 }

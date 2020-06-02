@@ -495,12 +495,67 @@ public class MSSQLrepository implements Repository{
 
     @Override
     public List<Row> countOnTable(String tableName, String columnCount, ArrayList<String> groupBy) {
-        return null;
+
+        List<Row> rows = new ArrayList<>();
+        StringBuilder groupCondition = new StringBuilder();
+        for(String str:groupBy){
+            groupCondition.append(str);
+            groupCondition.append(" , ");
+
+        }
+        groupCondition.deleteCharAt(groupCondition.lastIndexOf(","));
+
+
+        try{
+            this.initConnection();
+
+            StringBuilder queryToSend = new StringBuilder();
+            queryToSend.append("SELECT COUNT(");
+            queryToSend.append(columnCount);
+            queryToSend.append(")");
+            if(groupCondition.length()>0){
+                queryToSend.append(",");
+                queryToSend.append(groupCondition);
+            }
+            queryToSend.append(" FROM ");
+            queryToSend.append(tableName);
+            if(groupCondition.length()>0){
+                queryToSend.append(" GROUP BY ");
+                queryToSend.append(groupCondition);
+            }
+            queryToSend.append(";");
+            //System.out.println(queryToSend);
+
+            PreparedStatement preparedStatement = connection.prepareStatement(queryToSend.toString());
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()){
+
+                Row row = new Row();
+                row.setName(tableName);
+
+                ResultSetMetaData resultSetMetaData = rs.getMetaData();
+                for (int i = 1; i<=resultSetMetaData.getColumnCount(); i++){
+                    row.addField(resultSetMetaData.getColumnName(i), rs.getString(i));
+                }
+                rows.add(row);
+
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            this.closeConnection();
+        }
+        //System.out.println(rows);
+        return rows;
+
     }
+
 
     @Override
     public List<Row> avgOnTable(String tableName, String avgColumn, ArrayList<String> groupBy) {
-        System.out.println(tableName + avgColumn + groupBy);
 
         List<Row> rows = new ArrayList<>();
         StringBuilder groupCondition = new StringBuilder();
@@ -531,7 +586,7 @@ public class MSSQLrepository implements Repository{
                 queryToSend.append(groupCondition);
             }
             queryToSend.append(";");
-            System.out.println(queryToSend);
+            //System.out.println(queryToSend);
 
             PreparedStatement preparedStatement = connection.prepareStatement(queryToSend.toString());
             ResultSet rs = preparedStatement.executeQuery();
