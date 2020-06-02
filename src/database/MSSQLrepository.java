@@ -503,7 +503,7 @@ public class MSSQLrepository implements Repository{
             groupCondition.append(" , ");
 
         }
-        groupCondition.deleteCharAt(groupCondition.lastIndexOf(","));
+        if(groupCondition.lastIndexOf(",")>0)groupCondition.deleteCharAt(groupCondition.lastIndexOf(","));
 
 
         try{
@@ -565,7 +565,7 @@ public class MSSQLrepository implements Repository{
             groupCondition.append(" , ");
 
         }
-        groupCondition.deleteCharAt(groupCondition.lastIndexOf(","));
+        if(groupCondition.lastIndexOf(",")>0)groupCondition.deleteCharAt(groupCondition.lastIndexOf(","));
 
 
         try{
