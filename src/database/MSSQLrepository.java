@@ -512,7 +512,8 @@ public class MSSQLrepository implements Repository{
             StringBuilder queryToSend = new StringBuilder();
             queryToSend.append("SELECT COUNT(");
             queryToSend.append(columnCount);
-            queryToSend.append(")");
+            queryToSend.append(") as count_");
+            queryToSend.append(columnCount);
             if(groupCondition.length()>0){
                 queryToSend.append(",");
                 queryToSend.append(groupCondition);
@@ -574,7 +575,8 @@ public class MSSQLrepository implements Repository{
             StringBuilder queryToSend = new StringBuilder();
             queryToSend.append("SELECT AVG(");
             queryToSend.append(avgColumn);
-            queryToSend.append(")");
+            queryToSend.append(") as average_");
+            queryToSend.append(avgColumn);
             if(groupCondition.length()>0){
                 queryToSend.append(",");
                 queryToSend.append(groupCondition);
