@@ -25,7 +25,8 @@ public class Search extends MyAbstractAction {
         System.out.println("Search");
         Entity nt = ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getEntity();
 
-        String[] ops = { "Equal", "Greater than","Less than","Greater than or equal", "Less than or equal","Like"};
+        //String[] ops = { "Equal", "Greater than","Less than","Greater than or equal", "Less than or equal","Like"};
+        String[] ops = { "=", ">","<"," Like "};
         ArrayList<JRadioButton> columnButtons = new ArrayList<>();
         ArrayList<JRadioButton> operationButtons = new ArrayList<>();
         JButton andButton = new JButton("And");
@@ -36,11 +37,13 @@ public class Search extends MyAbstractAction {
         for(DBNode a:nt.getChildren()){
             JRadioButton jradbut = new JRadioButton(a.getName());
             group.add(jradbut);
+            jradbut.setActionCommand(a.getName());
             columnButtons.add(jradbut);
         }
         for(String s:ops){
             JRadioButton jradbut = new JRadioButton(s);
             operationButtons.add(jradbut);
+            jradbut.setActionCommand(s);
             opgrupa.add(jradbut);
         }
 
@@ -67,8 +70,8 @@ public class Search extends MyAbstractAction {
         myPanel.add(colPanel);
 
         JPanel opPanel = new JPanel();
-        GridLayout gr2 = new GridLayout(0,4,2,2);
-        colPanel.setLayout(gr2);
+        GridLayout gr2 = new GridLayout(0,4,13,13);
+        opPanel.setLayout(gr2);
         for(JRadioButton jbtn2:operationButtons){
             opPanel.add(jbtn2);
         }
@@ -84,17 +87,103 @@ public class Search extends MyAbstractAction {
         valuePanel.add(queryValue);
         valuePanel.add(andButton);
         valuePanel.add(orButton);
-        //valuePanel.add(new JButton("        Query preview"));
-        //valuePanel.add(query);
         myPanel.add(valuePanel);
+        // novo
+        JButton finishQuery = new JButton(" I'm done ");
+        myPanel.add(finishQuery);
+
+        StringBuilder upit = new StringBuilder();
+
+        finishQuery.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(queryValue.getText().length() > 0 && group.getSelection()!=null && opgrupa.getSelection()!=null){
+
+                    upit.append(group.getSelection().getActionCommand());
+                    upit.append(opgrupa.getSelection().getActionCommand());
+                    upit.append(queryValue.getText());
+                    upit.append(" ;");
+
+                    query.setText(upit.toString());
+                    queryValue.setText("");
+                    group.clearSelection();
+                    opgrupa.clearSelection();
+
+
+                }else{
+                    JOptionPane.showMessageDialog(null,
+                            "Select columns and enter the value!",
+                            "Input error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        // novo
         myPanel.add(query);
 
 
 
+        andButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(queryValue.getText().length() > 0 && group.getSelection()!=null && opgrupa.getSelection()!=null){
+                    upit.append(group.getSelection().getActionCommand());
+                    upit.append(opgrupa.getSelection().getActionCommand());
+                    upit.append(queryValue.getText());
+                    upit.append(" ");
+                    upit.append(" AND ");
+
+                    query.setText(upit.toString());
+                    queryValue.setText("");
+                    group.clearSelection();
+                    opgrupa.clearSelection();
+
+
+                }else{
+                    JOptionPane.showMessageDialog(null,
+                            "Input field mustn't be empty!",
+                            "Input error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+
+            }
+        });
+
+        orButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(queryValue.getText().length() > 0 && group.getSelection()!=null && opgrupa.getSelection()!=null){
+                    upit.append(group.getSelection().getActionCommand());
+                    upit.append(opgrupa.getSelection().getActionCommand());
+                    upit.append(queryValue.getText());
+                    upit.append(" ");
+                    upit.append(" OR ");
+
+                    query.setText(upit.toString());
+                    queryValue.setText("");
+                    group.clearSelection();
+                    opgrupa.clearSelection();
+
+
+
+
+                }else{
+                    JOptionPane.showMessageDialog(null,
+                            "Input field mustn't be empty!",
+                            "Input error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+
+            }
+        });
+
         int result = JOptionPane.showConfirmDialog(null, myPanel,
                 "Create your custom search query", JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
-            System.out.println("Test");
+
+            System.out.println(upit);
+
         }
 
 
