@@ -168,6 +168,7 @@ public class MSSQLrepository implements Repository{
             this.initConnection();
 
             String query = "SELECT * FROM " + from;
+            //System.out.println("UPIT :" +query);
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet rs = preparedStatement.executeQuery();
 

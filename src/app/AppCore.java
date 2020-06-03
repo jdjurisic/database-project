@@ -8,6 +8,7 @@ import database.MSSQLrepository;
 import database.settings.Settings;
 import database.settings.SettingsImplementation;
 import gui.table.TableModel;
+import javafx.scene.control.Tab;
 import lombok.Data;
 import observer.Notification;
 import observer.enums.NotificationCode;
@@ -122,5 +123,9 @@ public class AppCore extends PublisherImplementation {
         this.tableModel = tableModel;
     }
 
+    public void readDataFromTable(String fromTable, TableModel tabMod){
 
+        tabMod.setRows(this.database.readDataFromTable(fromTable));
+
+    }
 }

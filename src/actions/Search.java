@@ -1,5 +1,6 @@
 package actions;
 
+import app.Main;
 import gui.MainFrame;
 import gui.NorthTablePanel;
 import resource.DBNode;
@@ -22,7 +23,7 @@ public class Search extends MyAbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Search");
+        //System.out.println("Search");
         Entity nt = ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getEntity();
 
         //String[] ops = { "Equal", "Greater than","Less than","Greater than or equal", "Less than or equal","Like"};
@@ -33,6 +34,8 @@ public class Search extends MyAbstractAction {
         JButton orButton = new JButton("Or");
         ButtonGroup group = new ButtonGroup();
         ButtonGroup opgrupa = new ButtonGroup();
+
+        StringBuilder upit = new StringBuilder();
 
         for(DBNode a:nt.getChildren()){
             JRadioButton jradbut = new JRadioButton(a.getName());
@@ -88,26 +91,41 @@ public class Search extends MyAbstractAction {
         valuePanel.add(andButton);
         valuePanel.add(orButton);
         myPanel.add(valuePanel);
+        myPanel.add(query);
         // novo
-        JButton finishQuery = new JButton(" I'm done ");
+        JButton finishQuery = new JButton(" All conditions added ");
+        finishQuery.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         myPanel.add(finishQuery);
 
-        StringBuilder upit = new StringBuilder();
+
 
         finishQuery.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(queryValue.getText().length() > 0 && group.getSelection()!=null && opgrupa.getSelection()!=null){
+                if(queryValue.getText().trim().length() > 0 && group.getSelection()!=null && opgrupa.getSelection()!=null){
 
                     upit.append(group.getSelection().getActionCommand());
                     upit.append(opgrupa.getSelection().getActionCommand());
+                    upit.append("'");
                     upit.append(queryValue.getText());
+                    upit.append("'");
                     upit.append(" ;");
 
                     query.setText(upit.toString());
                     queryValue.setText("");
                     group.clearSelection();
                     opgrupa.clearSelection();
+
+                    for(JRadioButton jbtn13:operationButtons){
+                        jbtn13.setEnabled(false);
+                    }
+                    for(JRadioButton jbtn10:columnButtons){
+                        jbtn10.setEnabled(false);
+                    }
+                    andButton.setEnabled(false);
+                    orButton.setEnabled(false);
+                    finishQuery.setEnabled(false);
+                    queryValue.setEnabled(false);
 
 
                 }else{
@@ -120,17 +138,16 @@ public class Search extends MyAbstractAction {
         });
 
         // novo
-        myPanel.add(query);
-
-
 
         andButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(queryValue.getText().length() > 0 && group.getSelection()!=null && opgrupa.getSelection()!=null){
+                if(queryValue.getText().trim().length() > 0 && group.getSelection()!=null && opgrupa.getSelection()!=null){
                     upit.append(group.getSelection().getActionCommand());
                     upit.append(opgrupa.getSelection().getActionCommand());
+                    upit.append("'");
                     upit.append(queryValue.getText());
+                    upit.append("'");
                     upit.append(" ");
                     upit.append(" AND ");
 
@@ -153,10 +170,12 @@ public class Search extends MyAbstractAction {
         orButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(queryValue.getText().length() > 0 && group.getSelection()!=null && opgrupa.getSelection()!=null){
+                if(queryValue.getText().trim().length() > 0 && group.getSelection()!=null && opgrupa.getSelection()!=null){
                     upit.append(group.getSelection().getActionCommand());
                     upit.append(opgrupa.getSelection().getActionCommand());
+                    upit.append("'");
                     upit.append(queryValue.getText());
+                    upit.append("'");
                     upit.append(" ");
                     upit.append(" OR ");
 
@@ -181,8 +200,18 @@ public class Search extends MyAbstractAction {
         int result = JOptionPane.showConfirmDialog(null, myPanel,
                 "Create your custom search query", JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
+            if(upit.lastIndexOf(";") == upit.length()-1){
+                //System.out.println("Query:"+nt.getName()+" WHERE "+upit.toString());
+                MainFrame.getInstance().getAppCore().readDataFromTable(nt.getName()+" WHERE "+upit.toString(),
+                        ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel());
 
-            System.out.println(upit);
+
+            }else{
+                JOptionPane.showMessageDialog(null,
+                        "Your query wasnt finished!",
+                        "Input error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
 
         }
 
