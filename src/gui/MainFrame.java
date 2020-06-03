@@ -45,7 +45,7 @@ public class MainFrame  extends JFrame implements Subscriber {
         setLayout(new BorderLayout());
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
-        setSize((int) (screenSize.width / 2), (int) (screenSize.height / 2));
+        setSize((int) (screenSize.width / 1.5), (int) (screenSize.height / 1.5));
         setLocationRelativeTo(null);
 
 

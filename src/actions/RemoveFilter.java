@@ -8,8 +8,8 @@ import java.awt.event.ActionEvent;
 
 public class RemoveFilter extends MyAbstractAction {
     public RemoveFilter() {
-        putValue(NAME, "Remove Filter&Sort");
-        putValue(SHORT_DESCRIPTION, "remove filter and sort table ");
+        putValue(NAME, "Reload table");
+        putValue(SHORT_DESCRIPTION, "reload table from date base");
     }
 
     @Override

@@ -1,6 +1,7 @@
 package tree;
 
 
+import actions.ChangeSouthPanel;
 import app.Main;
 import gui.MainFrame;
 import resource.DBNode;
@@ -37,6 +38,7 @@ public class TreeMouseListener extends MouseAdapter {
 							MainFrame.getInstance().getNorthTab().setSelectedIndex(i);
 							//System.out.println("VEC SAM TU");
 							alreadyThere = true;
+							//ChangeSouthPanel.change();
 							break;
 						}
 					//novo
@@ -45,7 +47,8 @@ public class TreeMouseListener extends MouseAdapter {
 								MainFrame.getInstance().getAppCore().readTableModelFromTable(entity.getName()));
 						MainFrame.getInstance().getNorthTab().setSelectedIndex(MainFrame.getInstance().getNorthTab().getTabCount()-1);
 					}
-					MainFrame.getInstance().getSouthTab().removeAll();
+					ChangeSouthPanel.change();
+					/*MainFrame.getInstance().getSouthTab().removeAll();
 					for (DBNode dbNode:entity.getChildren()) {
 						if(dbNode instanceof Attribute){
 							Attribute attribute = (Attribute) dbNode;
@@ -60,7 +63,7 @@ public class TreeMouseListener extends MouseAdapter {
 								}
 							}
 						}
-					}
+					}*/
 
 				}
 
