@@ -85,6 +85,11 @@ public class Average extends MyAbstractAction{
             if(group.getSelection() != null){
                 MainFrame.getInstance().getAppCore().avgColumn(nt.getName(),group.getSelection().getActionCommand(),grpBy,
                         ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel());
+            }else{
+                JOptionPane.showMessageDialog(null,
+                        "Select column!",
+                        "Input error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
         ChangeSouthPanel.change();

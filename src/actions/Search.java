@@ -66,7 +66,8 @@ public class Search extends MyAbstractAction {
 
                                 }
                             }
-                        } else if(attribute.getAttributeType().equals(AttributeType.NUMERIC) || attribute.getAttributeType().equals(AttributeType.FLOAT)){
+                        } else if(attribute.getAttributeType().equals(AttributeType.NUMERIC) || attribute.getAttributeType().equals(AttributeType.FLOAT )
+                                || attribute.getAttributeType().equals(AttributeType.DATE) || attribute.getAttributeType().equals(AttributeType.DATETIME)){
                             for (JRadioButton jRadioButton:operationButtons) {
                                 if(jRadioButton.getActionCommand().equals(" Like ")){
                                     jRadioButton.setEnabled(false);

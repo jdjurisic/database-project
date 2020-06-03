@@ -58,7 +58,7 @@ public class NorthTablePanel extends JPanel {
 
         //float yDimenzija = this.getAlignmentY()/3;
         Dimension dimension=MainFrame.getInstance().getSize();
-        int height = (int) ((int) dimension.height/3.5);
+        int height = (int) ((int) dimension.height/2.8);
         jTable.setPreferredScrollableViewportSize(new Dimension(500, height));
         jTable.setFillsViewportHeight(true);
         this.add(new JScrollPane(jTable), BorderLayout.NORTH);

@@ -45,12 +45,12 @@ public class MainFrame  extends JFrame implements Subscriber {
         setLayout(new BorderLayout());
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
-        setSize((int) (screenSize.width / 1.618), (int) (screenSize.height / 1.618));
+        setSize((int) (screenSize.width / 2), (int) (screenSize.height / 2));
         setLocationRelativeTo(null);
 
 
-        MainMenu mainMenu = new MainMenu();
-        setJMenuBar(mainMenu);
+//        MainMenu mainMenu = new MainMenu();
+//        setJMenuBar(mainMenu);
 /*
         MainToolBar mainToolBar = new MainToolBar();
         add(mainToolBar, BorderLayout.NORTH);

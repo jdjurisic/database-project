@@ -23,6 +23,13 @@ public class UpdateAction extends MyAbstractAction {
     public void actionPerformed(ActionEvent e) {
         //System.out.println(" edit ");
         NorthTablePanel ntp = (NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent();
+        if(ntp.getjTable().getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(null,
+                    "Select column!",
+                    "Input error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         Row currentRow = ntp.getTableModel().getRows().get(ntp.getjTable().getSelectedRow());
 
         ArrayList<JTextField> fields = new ArrayList<>();

@@ -83,6 +83,11 @@ public class Count extends MyAbstractAction {
             if(group.getSelection() != null){
                 MainFrame.getInstance().getAppCore().countColumn(nt.getName(),group.getSelection().getActionCommand(),grpBy,
                         ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel());
+            }else{
+                JOptionPane.showMessageDialog(null,
+                        "Select column!",
+                        "Input error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
         ChangeSouthPanel.change();
