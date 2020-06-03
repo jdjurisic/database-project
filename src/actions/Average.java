@@ -87,6 +87,6 @@ public class Average extends MyAbstractAction{
                         ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel());
             }
         }
-
+        ChangeSouthPanel.change();
     }
 }

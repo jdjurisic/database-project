@@ -4,6 +4,8 @@ import app.Main;
 import gui.MainFrame;
 import gui.NorthTablePanel;
 import resource.DBNode;
+import resource.enums.AttributeType;
+import resource.implementation.Attribute;
 import resource.implementation.Entity;
 import sun.security.pkcs11.Secmod;
 
@@ -25,7 +27,7 @@ public class Search extends MyAbstractAction {
     public void actionPerformed(ActionEvent e) {
         //System.out.println("Search");
         Entity nt = ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getEntity();
-
+        JDialog jDialog = new JDialog(MainFrame.getInstance(), "Create your custom search query", true);
         //String[] ops = { "Equal", "Greater than","Less than","Greater than or equal", "Less than or equal","Like"};
         String[] ops = { "=", ">","<"," Like "};
         ArrayList<JRadioButton> columnButtons = new ArrayList<>();
@@ -37,18 +39,51 @@ public class Search extends MyAbstractAction {
 
         StringBuilder upit = new StringBuilder();
 
-        for(DBNode a:nt.getChildren()){
-            JRadioButton jradbut = new JRadioButton(a.getName());
-            group.add(jradbut);
-            jradbut.setActionCommand(a.getName());
-            columnButtons.add(jradbut);
-        }
         for(String s:ops){
             JRadioButton jradbut = new JRadioButton(s);
             operationButtons.add(jradbut);
             jradbut.setActionCommand(s);
             opgrupa.add(jradbut);
         }
+
+        for(DBNode a:nt.getChildren()){
+            if(a instanceof Attribute){
+                Attribute attribute = (Attribute) a;
+                JRadioButton jradbut = new JRadioButton(attribute.getName());
+                group.add(jradbut);
+                jradbut.setActionCommand(a.getName());
+                columnButtons.add(jradbut);
+                jradbut.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if(attribute.getAttributeType().equals(AttributeType.CHAR) || attribute.getAttributeType().equals(AttributeType.VARCHAR)){
+                            for (JRadioButton jRadioButton:operationButtons) {
+                                if(jRadioButton.getActionCommand().equals("=")||jRadioButton.getActionCommand().equals(">")||jRadioButton.getActionCommand().equals("<")){
+                                    jRadioButton.setEnabled(false);
+                                    opgrupa.clearSelection();
+                                }else {
+                                    jRadioButton.setEnabled(true);
+
+                                }
+                            }
+                        } else if(attribute.getAttributeType().equals(AttributeType.NUMERIC) || attribute.getAttributeType().equals(AttributeType.FLOAT)){
+                            for (JRadioButton jRadioButton:operationButtons) {
+                                if(jRadioButton.getActionCommand().equals(" Like ")){
+                                    jRadioButton.setEnabled(false);
+                                    opgrupa.clearSelection();
+                                }else {
+                                    jRadioButton.setEnabled(true);
+
+                                }
+                            }
+                        }
+
+                    }
+                });
+            }
+
+        }
+
 
         Border raisedbevel = BorderFactory.createRaisedBevelBorder();
         Border loweredbevel = BorderFactory.createLoweredBevelBorder();
@@ -93,11 +128,23 @@ public class Search extends MyAbstractAction {
         myPanel.add(valuePanel);
         myPanel.add(query);
         // novo
-        JButton finishQuery = new JButton(" All conditions added ");
+        JButton finishQuery = new JButton(" Ok ");
+        JButton cancel = new JButton("Cancel");
+        JPanel okCancelPanel = new JPanel();
+        okCancelPanel.setLayout(new GridLayout(0,2,5,5));
         finishQuery.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-        myPanel.add(finishQuery);
+        cancel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        okCancelPanel.add(finishQuery);
+        okCancelPanel.add(cancel);
 
+        myPanel.add(okCancelPanel);
 
+        cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jDialog.dispose();
+            }
+        });
 
         finishQuery.addActionListener(new ActionListener() {
             @Override
@@ -126,6 +173,18 @@ public class Search extends MyAbstractAction {
                     orButton.setEnabled(false);
                     finishQuery.setEnabled(false);
                     queryValue.setEnabled(false);
+                    if(upit.lastIndexOf(";") == upit.length()-1){
+                        //System.out.println("Query:"+nt.getName()+" WHERE "+upit.toString());
+                        MainFrame.getInstance().getAppCore().readDataFromTable(nt.getName()+" WHERE "+upit.toString(),
+                                ((NorthTablePanel) MainFrame.getInstance().getNorthTab().getSelectedComponent()).getTableModel());
+                        jDialog.dispose();
+
+                    }else{
+                        JOptionPane.showMessageDialog(null,
+                                "Your query wasnt finished!",
+                                "Input error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
 
 
                 }else{
@@ -136,6 +195,8 @@ public class Search extends MyAbstractAction {
                 }
             }
         });
+
+
 
         // novo
 
@@ -197,6 +258,13 @@ public class Search extends MyAbstractAction {
             }
         });
 
+
+
+        jDialog.add(myPanel);
+        jDialog.pack();
+        jDialog.setLocationRelativeTo(MainFrame.getInstance());
+        jDialog.setVisible(true);
+        /*
         int result = JOptionPane.showConfirmDialog(null, myPanel,
                 "Create your custom search query", JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
@@ -213,7 +281,7 @@ public class Search extends MyAbstractAction {
                         JOptionPane.ERROR_MESSAGE);
             }
 
-        }
+        }*/
 
 
 
