@@ -9,6 +9,7 @@ public class NorthToolBar extends JToolBar {
     public NorthToolBar() {
 
         super(BorderLayout.NORTH);
+        this.setLayout(new FlowLayout(FlowLayout.CENTER));
         setFloatable(false);
         addSeparator();
         this.add(Box.createHorizontalStrut(5));
